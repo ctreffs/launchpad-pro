@@ -17,7 +17,7 @@ u8 is_page_button(u8 index) {
 u8 in_array(u8 value, u8 arr[], u8 size) {
     for (u8 i = 0; i < size; ++i) {
         if (arr[i] == value) {
-            debug(30);
+            //debug2(30);
             return i;
         }
     }
@@ -27,6 +27,6 @@ u8 in_array(u8 value, u8 arr[], u8 size) {
     return 0;
 }
 
-void debug(u8 index) {
-    display_plot_led(index, rand()/100);
-}
+//void debug2(u8 index) {
+//    display_plot_led(index, rand()/100);
+//}
