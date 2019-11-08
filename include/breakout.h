@@ -20,7 +20,7 @@
 #define COLOR_WHITE 0xffffff
 #define COLOR_RED   0xff0000
 #define COLOR_GREEN 0x00ff00
-#define COLOR_GREEN 0x00ff00
+#define COLOR_BLUE  0x0000ff
 
 #define COLOR_PLATE 0x00ff00
 
@@ -34,21 +34,27 @@
 
 // We have a 8x9 grid
 #define WIDTH 8
-#define HEIGTH 9
+#define HEIGHT 9
 
 #define EMPTY 0
 #define BALL 1
 #define PLATE 2
 
-typedef unsigned int FIELD;
-typedef unsigned int BOARD[];
+#define TEST 255
+
+typedef unsigned char FIELD;
+typedef unsigned char BOARD[];
 
 #define BOARD_SIZE 72 // WIDTH * HEIGHT
-unsigned int board[BOARD_SIZE]; // DEFINE BOARD ARRAY
+unsigned char board[BOARD_SIZE]; // DEFINE BOARD ARRAY
 
 void debug_board(const BOARD board);
 
 void make_board(BOARD board);
+
+int get_index(const int x, const int y);
+int get_next_x(const int x);
+int get_next_y(const int y);
 
 void set_field(BOARD board, const int x, const int y, const FIELD value);
 FIELD get_field(const BOARD board, const int x, const int y);
@@ -59,6 +65,10 @@ int get_plate(const BOARD board);
 void move_plate_left(BOARD board);
 void move_plate_right(BOARD board);
 
+void advanceRunningLight(BOARD board);
+
 void draw(const BOARD board);
+
+void update_game_state();
 
 #endif /* breakout_h */

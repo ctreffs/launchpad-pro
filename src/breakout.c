@@ -12,7 +12,7 @@
 void debug_board(const BOARD board) {
     int x, y, i;
     
-    for (y = 0; y < HEIGTH ; y++){
+    for (y = 0; y < HEIGHT ; y++){
         for (x = 0; x < WIDTH ; x++) {
             i = y * WIDTH + x;
             PRINTF("%d ", board[i]);
@@ -36,26 +36,36 @@ void make_board(BOARD board) {
     
 }
 
+int get_index(const int x, const int y) {
+    return y * WIDTH + x;
+}
+
 void set_field(BOARD board, const int x, const int y, const FIELD value) {
-    int i = y * WIDTH + x;
-    board[i] = value;
+    board[get_index(x, y)] = value;
+}
+
+int get_next_x(const int x) {
+    return (x+1) % WIDTH;
+}
+
+int get_next_y(const int y) {
+    return (y+1) % HEIGHT;
 }
 
 FIELD get_field(const BOARD board, const int x, const int y) {
-    int i = y * WIDTH + x;
-    return board[i];
+    return board[get_index(x, y)];
 }
 
 void set_plate(BOARD board, const int middle) {
-    set_field(board, middle-1, HEIGTH-1, PLATE);
-    set_field(board, middle+0, HEIGTH-1, PLATE);
-    set_field(board, middle+1, HEIGTH-1, PLATE);
+    set_field(board, middle-1, HEIGHT-1, PLATE);
+    set_field(board, middle+0, HEIGHT-1, PLATE);
+    set_field(board, middle+1, HEIGHT-1, PLATE);
 }
 
 int get_plate(const BOARD board) {
     int x = 0;
     
-    while (get_field(board, x, HEIGTH-1) != PLATE) {
+    while (get_field(board, x, HEIGHT-1) != PLATE) {
         ++x;
     }
     return ++x;
@@ -65,7 +75,7 @@ void move_plate_left(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle > 1) {
         set_plate(board, middle-1);
-        set_field(board, middle+1, HEIGTH-1, EMPTY);
+        set_field(board, middle+1, HEIGHT-1, EMPTY);
     }
 }
 
@@ -73,8 +83,21 @@ void move_plate_right(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle < WIDTH-2) {
         set_plate(board, middle+1);
-        set_field(board, middle-1, HEIGTH-1, EMPTY);
+        set_field(board, middle-1, HEIGHT-1, EMPTY);
     }
+}
+
+
+int x = 0;
+void advanceRunningLight(BOARD board) {
+    board[get_index(x, 2)] = EMPTY;
+    x = get_next_x(x);
+    board[get_index(x, 2)] = TEST;
+}
+
+// update game state
+void update_game_state() {
+    advanceRunningLight(board);
 }
 
 void draw(const BOARD board) {
@@ -83,11 +106,21 @@ void draw(const BOARD board) {
     
     // draw plate
     FIELD plate_middle = get_plate(board);
-    
     display_plot_led(BOTTOM_LEFT + plate_middle-1, COLOR_PLATE);
     display_plot_led(BOTTOM_LEFT + plate_middle+0, COLOR_PLATE);
     display_plot_led(BOTTOM_LEFT + plate_middle+1, COLOR_PLATE);
-    //display_plot_led(plate_middle+1, COLOR_PLATE);
-    //display_plot_led(plate_middle, COLOR_PLATE);
-    //display_plot_led(plate_middle+1, COLOR_PLATE);
+    
+    // draw running light
+  
+    int x = 0;
+    for (x = 0; x < WIDTH ; x++){
+        
+        switch (board[get_index(x, 2)]) {
+        case TEST:
+            display_plot_led(61+x, COLOR_BLUE);
+            break;
+        default:
+            break;
+        }
+    }
 }

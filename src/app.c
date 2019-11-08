@@ -161,16 +161,16 @@ void app_cable_event(u8 type, u8 value)
 
 void app_timer_event()
 {
-    // a lot of timer events happening :-D
+    update_game_state();
     draw(board);
 }
+
 
 void app_init(const u16 *adc_raw)
 {
     
     make_board(board);
     debug_board(board);
-    
     
     
     fader_section_init();  
