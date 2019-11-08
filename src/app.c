@@ -153,11 +153,11 @@ void app_init(const u16 *adc_raw)
     unsigned int board[BOARD_SIZE];
     
     make_board(board);
-
-    
-    
     debug_board(board);
- 
+    
+    
+    
+    
     fader_section_init();  
     performance_section_init();
 	

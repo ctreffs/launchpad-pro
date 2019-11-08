@@ -6,6 +6,7 @@
 //  Copyright © 2019 Focusrite Audio Engineering Ltd. All rights reserved.
 //
 
+#include "app.h"
 #include "breakout.h"
 
 void debug_board(const BOARD board) {
@@ -17,8 +18,8 @@ void debug_board(const BOARD board) {
             printf("%d ", board[i]);
         }
         printf("\n");
-        
     }
+    printf("\n");
 }
 
 
@@ -49,4 +50,36 @@ void set_plate(BOARD board, const int middle) {
     set_field(board, middle-1, HEIGTH-1, PLATE);
     set_field(board, middle+0, HEIGTH-1, PLATE);
     set_field(board, middle+1, HEIGTH-1, PLATE);
+}
+
+int get_plate(const BOARD board) {
+    int x = 0;
+    
+    while (get_field(board, x, HEIGTH-1) != PLATE) {
+        ++x;
+    }
+    return ++x;
+}
+
+void move_plate_left(BOARD board) {
+    FIELD middle = get_plate(board);
+    if (middle > 1) {
+        set_plate(board, middle-1);
+        set_field(board, middle+1, HEIGTH-1, EMPTY);
+    }
+}
+
+void move_plate_right(BOARD board) {
+    FIELD middle = get_plate(board);
+    if (middle < WIDTH-2) {
+        set_plate(board, middle+1);
+        set_field(board, middle-1, HEIGTH-1, EMPTY);
+    }
+}
+
+void draw(const BOARD board) {
+    
+    display_plot_led(<#u8 index#>, )
+    
+    
 }
