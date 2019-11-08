@@ -78,8 +78,12 @@ void move_plate_right(BOARD board) {
 }
 
 void draw(const BOARD board) {
+    // clear screen
+    display_fill_all(COLOR_BLACK);
     
-    display_plot_led(<#u8 index#>, )
-    
-    
+    // draw plate
+    FIELD plate_middle = get_plate(board);
+    display_plot_led(plate_middle+1, COLOR_PLATE);
+    display_plot_led(plate_middle, COLOR_PLATE);
+    display_plot_led(plate_middle+1, COLOR_PLATE);
 }

@@ -10,9 +10,17 @@
 #define breakout_h
 
 // COLORS
-#define RED 0xff0000;
-#define GREEN 0x00ff00;
-#define GREEN 0x00ff00;
+#define COLOR_BLACK 0x000000
+#define COLOR_WHITE 0xffffff
+#define COLOR_RED   0xff0000
+#define COLOR_GREEN 0x00ff00
+#define COLOR_GREEN 0x00ff00
+
+#define COLOR_PLATE 0x00ff00
+
+// KEYBINDINGS
+#define MOVE_RIGHT 19 // index 19 app_button_event
+#define MOVE_LEFT 10 // index 10 app_button_event
 
 
 // We have a 8x9 grid
@@ -27,7 +35,7 @@ typedef unsigned int FIELD;
 typedef unsigned int BOARD[];
 
 #define BOARD_SIZE 72 // WIDTH * HEIGHT
-
+unsigned int board[BOARD_SIZE]; // DEFINE BOARD ARRAY
 
 void debug_board(const BOARD board);
 

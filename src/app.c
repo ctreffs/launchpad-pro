@@ -90,30 +90,46 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 
 // Pads event (11->18 ... 81->88)
 void app_pad_event(u8 index, u8 value) {
-    //printf("app_pad_event index:%u value:%u\n",index, value);
-    display_plot_led(index, 0xff0000);
-    switch (current_section) {
-        case FADER_SECTION: fader_section_handler(index); break;
-        case PERFORMANCE_SECTION: performance_section_handler(index, value); break;
-    }
+    printf("app_pad_event index:%u value:%u\n",index, value);
+    //display_plot_led(index, 0xff0000);
+    //switch (current_section) {
+    //    case FADER_SECTION: fader_section_handler(index); break;
+    //    case PERFORMANCE_SECTION: performance_section_handler(index, value); break;
+    //
 }
 
 // Button !pads
 void app_button_event(u8 index, u8 value) {
-    //printf("app_button_event index:%u value:%u\n",index, value);
-    if (is_section_button(index)) {
-        display_fill_all(0x000000);
-        current_section = index;
-        switch (index) {
-            case FADER_SECTION: fader_section_draw(); break;
-            case PERFORMANCE_SECTION: ; performance_section_draw(); break;
-        }
-    } else if (is_page_button(index)) {
-        switch (current_section) {
-            case FADER_SECTION: fader_section_change_page(index); break;
-            case PERFORMANCE_SECTION: performance_section_change_page(index); break;
-        }
+    printf("app_button_event index:%u value:%u\n",index, value);
+    
+    if (value <= 0) {
+        // ignore off
+        return;
     }
+    
+    switch (index) {
+        case MOVE_LEFT:
+            move_plate_left(board);
+            break;
+        case MOVE_RIGHT:
+            move_plate_right(board);
+        default:
+            break;
+    }
+    
+   // if (is_section_button(index)) {
+   //     display_fill_all(0x000000);
+   //     current_section = index;
+   //     switch (index) {
+   //         case FADER_SECTION: fader_section_draw(); break;
+   //         case PERFORMANCE_SECTION: ; performance_section_draw(); break;
+   //     }
+   // } else if (is_page_button(index)) {
+   //     switch (current_section) {
+   //         case FADER_SECTION: fader_section_change_page(index); break;
+   //         case PERFORMANCE_SECTION: performance_section_change_page(index); break;
+   //     }
+   // }
 }
 
 void app_midi_event(u8 port, u8 status, u8 d1, u8 d2)
@@ -146,15 +162,14 @@ void app_cable_event(u8 type, u8 value)
 void app_timer_event()
 {
     // a lot of timer events happening :-D
+    draw(board);
 }
 
 void app_init(const u16 *adc_raw)
 {
-    unsigned int board[BOARD_SIZE];
     
     make_board(board);
     debug_board(board);
-    
     
     
     
