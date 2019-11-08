@@ -113,6 +113,13 @@ void app_button_event(u8 index, u8 value) {
             break;
         case MOVE_RIGHT:
             move_plate_right(board);
+            break;
+        case FRAME_LIMIT_INC:
+            increase_frame_limit();
+            break;
+        case FRAME_LIMIT_DEC:
+            decrease_frame_limit();
+            break;
         default:
             break;
     }
@@ -161,7 +168,9 @@ void app_cable_event(u8 type, u8 value)
 
 void app_timer_event()
 {
-    update_game_state();
+    if (game_state_needs_update() == 1) {
+        update_game_state();
+    }
     draw(board);
 }
 
