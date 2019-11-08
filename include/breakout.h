@@ -9,6 +9,12 @@
 #ifndef breakout_h
 #define breakout_h
 
+#if DEBUG
+#define PRINTF(...) printf(__VA_ARGS__)
+#else
+#define PRINTF(...) { }
+#endif
+
 // COLORS
 #define COLOR_BLACK 0x000000
 #define COLOR_WHITE 0xffffff

@@ -15,11 +15,11 @@ void debug_board(const BOARD board) {
     for (y = 0; y < HEIGTH ; y++){
         for (x = 0; x < WIDTH ; x++) {
             i = y * WIDTH + x;
-            printf("%d ", board[i]);
+            PRINTF("%d ", board[i]);
         }
-        printf("\n");
+        PRINTF("\n");
     }
-    printf("\n");
+    PRINTF("\n");
 }
 
 

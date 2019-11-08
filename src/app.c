@@ -53,7 +53,7 @@ u8 current_section = FADER_SECTION;
 // ----------------------------------------------------------------
 
 void app_sysex_event(u8 port, u8 * data, u16 count) {
-    //printf("app_sysex_event port:%u dataCount:%u\n", port, count);
+    PRINTF("app_sysex_event port:%u dataCount:%u\n", port, count);
 }
 
 void app_aftertouch_event(u8 index, u8 value) {
@@ -90,7 +90,7 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 
 // Pads event (11->18 ... 81->88)
 void app_pad_event(u8 index, u8 value) {
-    printf("app_pad_event index:%u value:%u\n",index, value);
+    PRINTF("app_pad_event index:%u value:%u\n",index, value);
     //display_plot_led(index, 0xff0000);
     //switch (current_section) {
     //    case FADER_SECTION: fader_section_handler(index); break;
@@ -100,7 +100,7 @@ void app_pad_event(u8 index, u8 value) {
 
 // Button !pads
 void app_button_event(u8 index, u8 value) {
-    printf("app_button_event index:%u value:%u\n",index, value);
+    PRINTF("app_button_event index:%u value:%u\n",index, value);
     
     if (value <= 0) {
         // ignore off
