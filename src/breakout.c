@@ -8,18 +8,7 @@
 
 #include "breakout.h"
 
-void make_board(BOARD* board) {
-    int i;
-    
-    // initialize board empty
-    for (i = 0; i < BOARD_SIZE ; i++){
-        board[i] = EMPTY;
-    }
-    
-}
-
-
-void debug_board(const BOARD* board) {
+void debug_board(const BOARD board) {
     int x, y, i;
     
     for (y = 0; y < HEIGTH ; y++){
@@ -31,3 +20,20 @@ void debug_board(const BOARD* board) {
         
     }
 }
+
+
+void make_board(BOARD board) {
+    int i;
+    
+    // initialize board empty
+    for (i = 0; i < BOARD_SIZE ; i++){
+        board[i] = EMPTY;
+    }
+    
+}
+
+void set_field(BOARD board, const int x, const int y, const FIELD value) {
+    int i = y * WIDTH * x;
+    board[i] = value;
+}
+

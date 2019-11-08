@@ -72,7 +72,8 @@
 		C70651A51B7CC4D60005FDD9 /* source */ = {
 			isa = PBXGroup;
 			children = (
-				D7DFDFE42375C5C5004F5E6F /* modules */,
+				C706519F1B7CC4A20005FDD9 /* app.c */,
+				D7DD28D02375F727004EAB32 /* breakout.c */,
 				D7DFDFDB2375C59A004F5E6F /* display.c */,
 				D7DFDFD82375C59A004F5E6F /* fader_page.c */,
 				D7DFDFDD2375C59A004F5E6F /* fader_section.c */,
@@ -80,8 +81,7 @@
 				D7DFDFDA2375C59A004F5E6F /* midi.c */,
 				D7DFDFD92375C59A004F5E6F /* performance_section.c */,
 				C70651A71B7CC56F0005FDD9 /* simulator-osx.c */,
-				C706519F1B7CC4A20005FDD9 /* app.c */,
-				D7DD28D02375F727004EAB32 /* breakout.c */,
+				D7DFDFE42375C5C5004F5E6F /* modules */,
 			);
 			name = source;
 			sourceTree = "<group>";
@@ -89,6 +89,9 @@
 		C70651A61B7CC4DF0005FDD9 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				C70651A11B7CC4B20005FDD9 /* app_defs.h */,
+				C70651A21B7CC4B20005FDD9 /* app.h */,
+				D7DD28CF2375F67C004EAB32 /* breakout.h */,
 				D7DFDFD12375C582004F5E6F /* display.h */,
 				D7DFDFD42375C582004F5E6F /* fader_page.h */,
 				D7DFDFD32375C582004F5E6F /* fader_section.h */,
@@ -97,9 +100,6 @@
 				D7DFDFD62375C582004F5E6F /* modulation_pad.h */,
 				D7DFDFD72375C582004F5E6F /* performance_section.h */,
 				D7DFDFD52375C582004F5E6F /* piano.h */,
-				C70651A11B7CC4B20005FDD9 /* app_defs.h */,
-				C70651A21B7CC4B20005FDD9 /* app.h */,
-				D7DD28CF2375F67C004EAB32 /* breakout.h */,
 			);
 			name = include;
 			sourceTree = "<group>";

@@ -152,6 +152,8 @@ void app_init(const u16 *adc_raw)
 {
     
     make_board(board);
+    
+    set_field(board, 1, 2, 4);
     debug_board(board);
  
     fader_section_init();  
