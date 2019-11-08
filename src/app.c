@@ -36,6 +36,7 @@
 //______________________________________________________________________________
 
 #include "app.h"
+#include "breakout.h"
 
 // store ADC frame pointer
 static const u16 *g_ADC = 0;
@@ -149,6 +150,10 @@ void app_timer_event()
 
 void app_init(const u16 *adc_raw)
 {
+    
+    make_board(board);
+    debug_board(board);
+ 
     fader_section_init();  
     performance_section_init();
 	

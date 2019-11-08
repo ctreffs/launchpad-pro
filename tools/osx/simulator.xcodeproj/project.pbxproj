@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C70651A01B7CC4A20005FDD9 /* app.c in Sources */ = {isa = PBXBuildFile; fileRef = C706519F1B7CC4A20005FDD9 /* app.c */; };
 		C70651A81B7CC56F0005FDD9 /* simulator-osx.c in Sources */ = {isa = PBXBuildFile; fileRef = C70651A71B7CC56F0005FDD9 /* simulator-osx.c */; };
+		D7DD28D12375F727004EAB32 /* breakout.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DD28D02375F727004EAB32 /* breakout.c */; };
 		D7DFDFDE2375C59A004F5E6F /* fader_page.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFD82375C59A004F5E6F /* fader_page.c */; };
 		D7DFDFDF2375C59A004F5E6F /* performance_section.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFD92375C59A004F5E6F /* performance_section.c */; };
 		D7DFDFE02375C59A004F5E6F /* midi.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFDA2375C59A004F5E6F /* midi.c */; };
@@ -37,6 +38,8 @@
 		C70651A21B7CC4B20005FDD9 /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = app.h; path = ../../include/app.h; sourceTree = "<group>"; };
 		C70651A71B7CC56F0005FDD9 /* simulator-osx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "simulator-osx.c"; sourceTree = "<group>"; };
 		C71365101B7CC2E500AB8010 /* simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simulator; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DD28CF2375F67C004EAB32 /* breakout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = breakout.h; path = ../../include/breakout.h; sourceTree = "<group>"; };
+		D7DD28D02375F727004EAB32 /* breakout.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = breakout.c; path = ../../src/breakout.c; sourceTree = "<group>"; };
 		D7DFDFD02375C582004F5E6F /* helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helper.h; path = ../../include/helper.h; sourceTree = "<group>"; };
 		D7DFDFD12375C582004F5E6F /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = ../../include/display.h; sourceTree = "<group>"; };
 		D7DFDFD22375C582004F5E6F /* midi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = midi.h; path = ../../include/midi.h; sourceTree = "<group>"; };
@@ -78,6 +81,7 @@
 				D7DFDFD92375C59A004F5E6F /* performance_section.c */,
 				C70651A71B7CC56F0005FDD9 /* simulator-osx.c */,
 				C706519F1B7CC4A20005FDD9 /* app.c */,
+				D7DD28D02375F727004EAB32 /* breakout.c */,
 			);
 			name = source;
 			sourceTree = "<group>";
@@ -95,6 +99,7 @@
 				D7DFDFD52375C582004F5E6F /* piano.h */,
 				C70651A11B7CC4B20005FDD9 /* app_defs.h */,
 				C70651A21B7CC4B20005FDD9 /* app.h */,
+				D7DD28CF2375F67C004EAB32 /* breakout.h */,
 			);
 			name = include;
 			sourceTree = "<group>";
@@ -189,6 +194,7 @@
 				D7DFDFDE2375C59A004F5E6F /* fader_page.c in Sources */,
 				C70651A81B7CC56F0005FDD9 /* simulator-osx.c in Sources */,
 				D7DFDFE82375C5C5004F5E6F /* piano.c in Sources */,
+				D7DD28D12375F727004EAB32 /* breakout.c in Sources */,
 				D7DFDFE12375C59A004F5E6F /* display.c in Sources */,
 				C70651A01B7CC4A20005FDD9 /* app.c in Sources */,
 				D7DFDFE32375C59A004F5E6F /* fader_section.c in Sources */,
