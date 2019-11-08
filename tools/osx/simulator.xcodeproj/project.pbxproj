@@ -9,6 +9,14 @@
 /* Begin PBXBuildFile section */
 		C70651A01B7CC4A20005FDD9 /* app.c in Sources */ = {isa = PBXBuildFile; fileRef = C706519F1B7CC4A20005FDD9 /* app.c */; };
 		C70651A81B7CC56F0005FDD9 /* simulator-osx.c in Sources */ = {isa = PBXBuildFile; fileRef = C70651A71B7CC56F0005FDD9 /* simulator-osx.c */; };
+		D7DFDFDE2375C59A004F5E6F /* fader_page.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFD82375C59A004F5E6F /* fader_page.c */; };
+		D7DFDFDF2375C59A004F5E6F /* performance_section.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFD92375C59A004F5E6F /* performance_section.c */; };
+		D7DFDFE02375C59A004F5E6F /* midi.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFDA2375C59A004F5E6F /* midi.c */; };
+		D7DFDFE12375C59A004F5E6F /* display.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFDB2375C59A004F5E6F /* display.c */; };
+		D7DFDFE22375C59A004F5E6F /* helper.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFDC2375C59A004F5E6F /* helper.c */; };
+		D7DFDFE32375C59A004F5E6F /* fader_section.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFDD2375C59A004F5E6F /* fader_section.c */; };
+		D7DFDFE72375C5C5004F5E6F /* modulation_pad.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFE52375C5C5004F5E6F /* modulation_pad.c */; };
+		D7DFDFE82375C5C5004F5E6F /* piano.c in Sources */ = {isa = PBXBuildFile; fileRef = D7DFDFE62375C5C5004F5E6F /* piano.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -29,6 +37,22 @@
 		C70651A21B7CC4B20005FDD9 /* app.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = app.h; path = ../../include/app.h; sourceTree = "<group>"; };
 		C70651A71B7CC56F0005FDD9 /* simulator-osx.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = "simulator-osx.c"; sourceTree = "<group>"; };
 		C71365101B7CC2E500AB8010 /* simulator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = simulator; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7DFDFD02375C582004F5E6F /* helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = helper.h; path = ../../include/helper.h; sourceTree = "<group>"; };
+		D7DFDFD12375C582004F5E6F /* display.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = display.h; path = ../../include/display.h; sourceTree = "<group>"; };
+		D7DFDFD22375C582004F5E6F /* midi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = midi.h; path = ../../include/midi.h; sourceTree = "<group>"; };
+		D7DFDFD32375C582004F5E6F /* fader_section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fader_section.h; path = ../../include/fader_section.h; sourceTree = "<group>"; };
+		D7DFDFD42375C582004F5E6F /* fader_page.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fader_page.h; path = ../../include/fader_page.h; sourceTree = "<group>"; };
+		D7DFDFD52375C582004F5E6F /* piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = piano.h; path = ../../include/piano.h; sourceTree = "<group>"; };
+		D7DFDFD62375C582004F5E6F /* modulation_pad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = modulation_pad.h; path = ../../include/modulation_pad.h; sourceTree = "<group>"; };
+		D7DFDFD72375C582004F5E6F /* performance_section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = performance_section.h; path = ../../include/performance_section.h; sourceTree = "<group>"; };
+		D7DFDFD82375C59A004F5E6F /* fader_page.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fader_page.c; path = ../../src/fader_page.c; sourceTree = "<group>"; };
+		D7DFDFD92375C59A004F5E6F /* performance_section.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = performance_section.c; path = ../../src/performance_section.c; sourceTree = "<group>"; };
+		D7DFDFDA2375C59A004F5E6F /* midi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = midi.c; path = ../../src/midi.c; sourceTree = "<group>"; };
+		D7DFDFDB2375C59A004F5E6F /* display.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = display.c; path = ../../src/display.c; sourceTree = "<group>"; };
+		D7DFDFDC2375C59A004F5E6F /* helper.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = helper.c; path = ../../src/helper.c; sourceTree = "<group>"; };
+		D7DFDFDD2375C59A004F5E6F /* fader_section.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = fader_section.c; path = ../../src/fader_section.c; sourceTree = "<group>"; };
+		D7DFDFE52375C5C5004F5E6F /* modulation_pad.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = modulation_pad.c; sourceTree = "<group>"; };
+		D7DFDFE62375C5C5004F5E6F /* piano.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = piano.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +69,13 @@
 		C70651A51B7CC4D60005FDD9 /* source */ = {
 			isa = PBXGroup;
 			children = (
+				D7DFDFE42375C5C5004F5E6F /* modules */,
+				D7DFDFDB2375C59A004F5E6F /* display.c */,
+				D7DFDFD82375C59A004F5E6F /* fader_page.c */,
+				D7DFDFDD2375C59A004F5E6F /* fader_section.c */,
+				D7DFDFDC2375C59A004F5E6F /* helper.c */,
+				D7DFDFDA2375C59A004F5E6F /* midi.c */,
+				D7DFDFD92375C59A004F5E6F /* performance_section.c */,
 				C70651A71B7CC56F0005FDD9 /* simulator-osx.c */,
 				C706519F1B7CC4A20005FDD9 /* app.c */,
 			);
@@ -54,6 +85,14 @@
 		C70651A61B7CC4DF0005FDD9 /* include */ = {
 			isa = PBXGroup;
 			children = (
+				D7DFDFD12375C582004F5E6F /* display.h */,
+				D7DFDFD42375C582004F5E6F /* fader_page.h */,
+				D7DFDFD32375C582004F5E6F /* fader_section.h */,
+				D7DFDFD02375C582004F5E6F /* helper.h */,
+				D7DFDFD22375C582004F5E6F /* midi.h */,
+				D7DFDFD62375C582004F5E6F /* modulation_pad.h */,
+				D7DFDFD72375C582004F5E6F /* performance_section.h */,
+				D7DFDFD52375C582004F5E6F /* piano.h */,
 				C70651A11B7CC4B20005FDD9 /* app_defs.h */,
 				C70651A21B7CC4B20005FDD9 /* app.h */,
 			);
@@ -75,6 +114,16 @@
 				C71365101B7CC2E500AB8010 /* simulator */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D7DFDFE42375C5C5004F5E6F /* modules */ = {
+			isa = PBXGroup;
+			children = (
+				D7DFDFE52375C5C5004F5E6F /* modulation_pad.c */,
+				D7DFDFE62375C5C5004F5E6F /* piano.c */,
+			);
+			name = modules;
+			path = ../../src/modules;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -116,6 +165,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = C71365071B7CC2E500AB8010;
@@ -133,8 +183,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7DFDFE02375C59A004F5E6F /* midi.c in Sources */,
+				D7DFDFE72375C5C5004F5E6F /* modulation_pad.c in Sources */,
+				D7DFDFDF2375C59A004F5E6F /* performance_section.c in Sources */,
+				D7DFDFDE2375C59A004F5E6F /* fader_page.c in Sources */,
 				C70651A81B7CC56F0005FDD9 /* simulator-osx.c in Sources */,
+				D7DFDFE82375C5C5004F5E6F /* piano.c in Sources */,
+				D7DFDFE12375C59A004F5E6F /* display.c in Sources */,
 				C70651A01B7CC4A20005FDD9 /* app.c in Sources */,
+				D7DFDFE32375C59A004F5E6F /* fader_section.c in Sources */,
+				D7DFDFE22375C59A004F5E6F /* helper.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

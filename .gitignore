@@ -50,3 +50,4 @@ tools/osx/simulator.xcodeproj/xcuserdata/davehodder.xcuserdatad/xcschemes/xcsche
 tools/osx/simulator.xcodeproj/xcuserdata
 
 .cquery_cache
+*.xcworkspace
