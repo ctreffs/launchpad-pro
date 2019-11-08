@@ -27,8 +27,8 @@
 // KEYBINDINGS
 #define MOVE_RIGHT 19 // index 19 app_button_event
 #define MOVE_LEFT 10 // index 10 app_button_event
-#define FRAME_LIMIT_INC 91
-#define FRAME_LIMIT_DEC 92
+#define FRAME_LIMIT_INC 92 // these are flipped to invert mapping - it's more intuitive
+#define FRAME_LIMIT_DEC 91
 
 #define GRID_BOTTOM_LEFT 11
 #define GRID_BOTTOM_RIGHT 18
@@ -52,7 +52,7 @@ typedef unsigned char BOARD[];
 #define BOARD_SIZE 72 // WIDTH * HEIGHT
 unsigned char board[BOARD_SIZE]; // DEFINE BOARD ARRAY
 unsigned int frame_count;
-unsigned int frame_limit;
+unsigned int game_speed;
 
 void debug_board(const BOARD board);
 
@@ -72,8 +72,8 @@ void move_plate_left(BOARD board);
 void move_plate_right(BOARD board);
 
 void advanceRunningLight(BOARD board);
-void increase_frame_limit();
-void decrease_frame_limit();
+void increase_game_speed();
+void decrease_game_speed();
 
 void draw(const BOARD board);
 

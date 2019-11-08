@@ -25,7 +25,7 @@ void debug_board(const BOARD board) {
 
 void make_board(BOARD board) {
     frame_count = 0;
-    frame_limit = 30;
+    game_speed = 50;
     
     int i;
     
@@ -90,15 +90,15 @@ void move_plate_right(BOARD board) {
     }
 }
 
-void increase_frame_limit() {
-    frame_limit += 1;
+void increase_game_speed() {
+    game_speed += 1;
 }
 
-void decrease_frame_limit() {
-    if (frame_limit == 0) {
+void decrease_game_speed() {
+    if (game_speed == 0) {
         return;
     }
-    frame_limit -= 1;
+    game_speed -= 1;
 }
 
 // TODO: remove since this is only debug
@@ -110,7 +110,7 @@ void advanceRunningLight(BOARD board) {
 }
 
 int game_state_needs_update() {
-    if (frame_count == frame_limit) {
+    if (frame_count == game_speed) {
         frame_count = 0;
         return 1;
     }

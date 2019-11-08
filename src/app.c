@@ -115,10 +115,10 @@ void app_button_event(u8 index, u8 value) {
             move_plate_right(board);
             break;
         case FRAME_LIMIT_INC:
-            increase_frame_limit();
+            increase_game_speed();
             break;
         case FRAME_LIMIT_DEC:
-            decrease_frame_limit();
+            decrease_game_speed();
             break;
         default:
             break;
