@@ -30,10 +30,23 @@ void make_board(BOARD board) {
         board[i] = EMPTY;
     }
     
+    // set plate
+    set_plate(board, 4);
+    
 }
 
 void set_field(BOARD board, const int x, const int y, const FIELD value) {
-    int i = y * WIDTH * x;
+    int i = y * WIDTH + x;
     board[i] = value;
 }
 
+FIELD get_field(const BOARD board, const int x, const int y) {
+    int i = y * WIDTH + x;
+    return board[i];
+}
+
+void set_plate(BOARD board, const int middle) {
+    set_field(board, middle-1, HEIGTH-1, PLATE);
+    set_field(board, middle+0, HEIGTH-1, PLATE);
+    set_field(board, middle+1, HEIGTH-1, PLATE);
+}

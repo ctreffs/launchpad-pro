@@ -19,18 +19,20 @@
 #define BALL 0
 #define PLATE 2
 
-typedef unsigned char FIELD;
-typedef FIELD* BOARD;
+typedef unsigned int FIELD;
+typedef unsigned int BOARD[];
 
 #define BOARD_SIZE 72 // WIDTH * HEIGHT
-unsigned char board[BOARD_SIZE];
+
 
 void debug_board(const BOARD board);
 
 void make_board(BOARD board);
-void set_field(BOARD, const int x, const int y, const FIELD value);
 
+void set_field(BOARD board, const int x, const int y, const FIELD value);
+FIELD get_field(const BOARD board, const int x, const int y);
 
+void set_plate(BOARD board, const int middle);
 
 
 

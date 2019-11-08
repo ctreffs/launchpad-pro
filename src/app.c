@@ -150,10 +150,12 @@ void app_timer_event()
 
 void app_init(const u16 *adc_raw)
 {
+    unsigned int board[BOARD_SIZE];
     
     make_board(board);
+
     
-    set_field(board, 1, 2, 4);
+    
     debug_board(board);
  
     fader_section_init();  
