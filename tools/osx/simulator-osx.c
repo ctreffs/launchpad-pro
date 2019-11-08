@@ -351,7 +351,7 @@ int main(int argc, char * argv[])
     
     // clear dummy flash & ADC
     memset(g_Flash, 0, USER_AREA_SIZE);
-    memset(g_ADC, 0, sizeof(g_ADC));
+   // memset(g_ADC, 0, sizeof(g_ADC));
 
 	// now start things up
 	app_init(g_ADC);

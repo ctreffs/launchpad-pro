@@ -51,7 +51,9 @@ u8 current_section = FADER_SECTION;
 
 // ----------------------------------------------------------------
 
-void app_sysex_event(u8 port, u8 * data, u16 count) { }
+void app_sysex_event(u8 port, u8 * data, u16 count) {
+    //printf("app_sysex_event port:%u dataCount:%u\n", port, count);
+}
 
 void app_aftertouch_event(u8 index, u8 value) {
     switch (current_section) {
@@ -87,6 +89,8 @@ void app_surface_event(u8 type, u8 index, u8 value) {
 
 // Pads event (11->18 ... 81->88)
 void app_pad_event(u8 index, u8 value) {
+    //printf("app_pad_event index:%u value:%u\n",index, value);
+    display_plot_led(index, 0xff0000);
     switch (current_section) {
         case FADER_SECTION: fader_section_handler(index); break;
         case PERFORMANCE_SECTION: performance_section_handler(index, value); break;
@@ -95,6 +99,7 @@ void app_pad_event(u8 index, u8 value) {
 
 // Button !pads
 void app_button_event(u8 index, u8 value) {
+    //printf("app_button_event index:%u value:%u\n",index, value);
     if (is_section_button(index)) {
         display_fill_all(0x000000);
         current_section = index;
@@ -139,6 +144,7 @@ void app_cable_event(u8 type, u8 value)
 
 void app_timer_event()
 {
+    // a lot of timer events happening :-D
 }
 
 void app_init(const u16 *adc_raw)
