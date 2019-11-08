@@ -28,6 +28,9 @@
 #define MOVE_RIGHT 19 // index 19 app_button_event
 #define MOVE_LEFT 10 // index 10 app_button_event
 
+#define GRID_BOTTOM_LEFT 11
+#define GRID_BOTTOM_RIGHT 18
+#define BOTTOM_LEFT 1
 
 // We have a 8x9 grid
 #define WIDTH 8

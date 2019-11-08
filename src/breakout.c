@@ -83,7 +83,11 @@ void draw(const BOARD board) {
     
     // draw plate
     FIELD plate_middle = get_plate(board);
-    display_plot_led(plate_middle+1, COLOR_PLATE);
-    display_plot_led(plate_middle, COLOR_PLATE);
-    display_plot_led(plate_middle+1, COLOR_PLATE);
+    
+    display_plot_led(BOTTOM_LEFT + plate_middle-1, COLOR_PLATE);
+    display_plot_led(BOTTOM_LEFT + plate_middle+0, COLOR_PLATE);
+    display_plot_led(BOTTOM_LEFT + plate_middle+1, COLOR_PLATE);
+    //display_plot_led(plate_middle+1, COLOR_PLATE);
+    //display_plot_led(plate_middle, COLOR_PLATE);
+    //display_plot_led(plate_middle+1, COLOR_PLATE);
 }
