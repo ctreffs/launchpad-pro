@@ -51,8 +51,8 @@ typedef unsigned char BOARD[];
 
 #define BOARD_SIZE 72 // WIDTH * HEIGHT
 unsigned char board[BOARD_SIZE]; // DEFINE BOARD ARRAY
-unsigned int frame_count;
-unsigned int game_speed;
+long frame_count;
+long game_speed;
 
 void debug_board(const BOARD board);
 

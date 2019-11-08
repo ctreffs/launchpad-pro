@@ -25,7 +25,7 @@ void debug_board(const BOARD board) {
 
 void make_board(BOARD board) {
     frame_count = 0;
-    game_speed = 50;
+    game_speed = 300;
     
     int i;
     
@@ -91,14 +91,16 @@ void move_plate_right(BOARD board) {
 }
 
 void increase_game_speed() {
-    game_speed += 1;
+    game_speed += 10;
 }
 
 void decrease_game_speed() {
-    if (game_speed == 0) {
+    long newSpeed = game_speed - 10;
+    if (newSpeed <= 0) {
+        game_speed = 0;
         return;
     }
-    game_speed -= 1;
+    game_speed = newSpeed;
 }
 
 // TODO: remove since this is only debug
