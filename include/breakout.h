@@ -37,7 +37,7 @@
 #define HEIGTH 9
 
 #define EMPTY 0
-#define BALL 0
+#define BALL 1
 #define PLATE 2
 
 typedef unsigned int FIELD;
