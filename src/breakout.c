@@ -26,7 +26,7 @@ void debug_board(const BOARD board) {
 
 void make_board(BOARD board) {
     frame_count = 0;
-    game_speed = 240;
+    game_speed = 220;
     
     int i;
     
@@ -202,6 +202,7 @@ void decrease_game_speed() {
 int idx = 15;
 Vec2 dir = { -1, 1};
 Vec2 pos = { 0, 0};
+bool hasCollided = false;
 void simulateBall(BOARD board) {
     board[idx] = EMPTY;
     pos.x = get_x(idx);
@@ -211,19 +212,39 @@ void simulateBall(BOARD board) {
     col.x = pos.x + col.x;
     col.y = pos.y + col.y;
     
+    // reset collision highlight
+    hasCollided = false;
+    
     if (col.x != pos.x || col.y != pos.y) {
-        // COLLISION!
-        PRINTF("COL x:%d y:%d\n", col.x, col.y);
-        if (is_vec_on_board(col)) {
-            board[get_index_vec(col)] = COLLISION;
+        if (is_vec_on_board(col)) { // COLLISION!
+            resolveCollison(board, col);
+            hasCollided = true;
         }
-        
     }
     
     
     idx = get_next_index(idx, dir);
     board[idx] = BALL;
     
+}
+
+void resolveCollison(BOARD board, const Vec2 col) {
+    PRINTF("COL x:%d y:%d\n", col.x, col.y);
+    int idx = get_index_vec(col);
+    if (board[idx] == PLATE || board[idx] == CONTROL) {
+        return;
+    } else if (board[idx] >= BRICK_MIN && board[idx] < BRICK_MAX) {
+        FIELD brickNum = board[idx];
+        int y = get_y(idx);
+        int idx = get_index(0, y);
+        int endIdx = get_index(WIDTH-1, y);
+        while (idx != endIdx) {
+            if (board[idx] == brickNum) {
+                board[idx] = EMPTY;
+            }
+            idx = get_next_index(idx, (Vec2){ 1,0 });
+        }
+    }
 }
 
 int game_state_needs_update() {
@@ -248,7 +269,11 @@ void draw(const BOARD board) {
         if (board[i] == EMPTY) {
             display_plot_led(i, COLOR_BLACK);
         } else if (board[i] == BALL) {
-            display_plot_led(i, COLOR_BALL);
+            if (hasCollided) {
+                display_plot_led(i, COLOR_BALL_HIGHLIGHT);
+            } else {
+                display_plot_led(i, COLOR_BALL);
+            }
         } else if (board[i] == PLATE) {
             display_plot_led(i, COLOR_PLATE);
         } else if (board[i] == CONTROL) {

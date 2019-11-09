@@ -27,6 +27,7 @@
 
 #define COLOR_PLATE     0x00ff00
 #define COLOR_BALL      0x0000ff
+#define COLOR_BALL_HIGHLIGHT  0xffffff
 #define COLOR_CONTROL   0x00ff00
 #define COLOR_COLLISION 0xffffff
 
@@ -109,5 +110,6 @@ bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
 bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
 int is_neighbor(BOARD board, Vec2 pos);
 Vec2 bounce(Vec2* dir, int n[8]);
+void resolveCollison(BOARD board, const Vec2 col);
 
 #endif /* breakout_h */
