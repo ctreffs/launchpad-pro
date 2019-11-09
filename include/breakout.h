@@ -25,9 +25,10 @@
 #define COLOR_GREEN 0x00ff00
 #define COLOR_BLUE  0x0000ff
 
-#define COLOR_PLATE   0x00ff00
-#define COLOR_BALL    0x0000ff
-#define COLOR_CONTROL 0xff0000
+#define COLOR_PLATE     0x00ff00
+#define COLOR_BALL      0x0000ff
+#define COLOR_CONTROL   0x00ff00
+#define COLOR_COLLISION 0xffffff
 
 // KEYBINDINGS
 #define MOVE_RIGHT 19 // index 19 app_button_event
@@ -45,10 +46,9 @@
 #define EMPTY 0
 #define WALL 1
 #define CONTROL 2
-
-
-#define PLATE 3
-#define BALL 4
+#define COLLISION 3
+#define PLATE 4
+#define BALL 5
 
 #define BRICK_MIN 10
 #define BRICK_MAX 50

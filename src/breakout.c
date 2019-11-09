@@ -49,7 +49,7 @@ void make_board(BOARD board) {
     set_field(board, WIDTH-1, 1, CONTROL);
     
     
-    make_bricks(board, 2);
+    make_bricks(board, 4);
 }
 
 void make_bricks(BOARD board, const unsigned int brickSize) {
@@ -215,7 +215,7 @@ void simulateBall(BOARD board) {
         // COLLISION!
         PRINTF("COL x:%d y:%d\n", col.x, col.y);
         if (is_vec_on_board(col)) {
-            board[get_index_vec(col)] = CONTROL;
+            board[get_index_vec(col)] = COLLISION;
         }
         
     }
@@ -245,27 +245,34 @@ void draw(const BOARD board) {
     int i = 0;
     // DRAW SCANLINE
     for (i = 0; i < BOARD_SIZE ; i++){
-        
-        switch (board[i]) {
-            case EMPTY:
-                display_plot_led(i, COLOR_BLACK);
-                break;
-            case BALL:
-                display_plot_led(i, COLOR_BALL);
-                break;
-            case PLATE:
-                display_plot_led(i, COLOR_PLATE);
-                break;
-            case CONTROL:
-                display_plot_led(i, COLOR_CONTROL);
-                break;
-            default:
-                break;
-                
+        if (board[i] == EMPTY) {
+            display_plot_led(i, COLOR_BLACK);
+        } else if (board[i] == BALL) {
+            display_plot_led(i, COLOR_BALL);
+        } else if (board[i] == PLATE) {
+            display_plot_led(i, COLOR_PLATE);
+        } else if (board[i] == CONTROL) {
+            display_plot_led(i, COLOR_CONTROL);
+        } else if (board[i] == COLLISION) {
+            display_plot_led(i, COLOR_COLLISION);
+        } else if (board[i] >= BRICK_MIN && board[i] < BRICK_MAX) {
+            switch ((board[i] + get_y(i)) % 3) {
+                case 0:
+                    display_plot_led(i, COLOR_RED);
+                    break;
+                case 1:
+                    display_plot_led(i, COLOR_BLUE);
+                    break;
+                case 2:
+                    display_plot_led(i, COLOR_GREEN);
+                    break;
+                default:
+                    break;
+            }
         }
-        
     }
 }
+
 // MARK: - collision
 
 Vec2 get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position) {
