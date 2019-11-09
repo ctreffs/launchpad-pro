@@ -23,6 +23,7 @@
 #define COLOR_BLUE  0x0000ff
 
 #define COLOR_PLATE 0x00ff00
+#define COLOR_BALL  0xff0000
 
 // KEYBINDINGS
 #define MOVE_RIGHT 19 // index 19 app_button_event
@@ -34,9 +35,8 @@
 #define GRID_BOTTOM_RIGHT 18
 #define BOTTOM_LEFT 1
 
-// We have a 8x9 grid
-#define WIDTH 8
-#define HEIGHT 9
+#define WIDTH 10
+#define HEIGHT 10
 
 #define EMPTY 0
 #define BALL 1
@@ -47,9 +47,15 @@
 typedef unsigned char FIELD;
 typedef unsigned char BOARD[];
 
+typedef struct Vec2
+{
+    int x;
+    int y;
+} Vec2;
 
 
-#define BOARD_SIZE 72 // WIDTH * HEIGHT
+
+#define BOARD_SIZE 100 // WIDTH * HEIGHT
 unsigned char board[BOARD_SIZE]; // DEFINE BOARD ARRAY
 long frame_count;
 long game_speed;
@@ -75,6 +81,7 @@ void advanceRunningLight(BOARD board);
 void increase_game_speed();
 void decrease_game_speed();
 
+int get_draw_index(const int index);
 void draw(const BOARD board);
 
 int game_state_needs_update();

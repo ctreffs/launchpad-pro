@@ -40,7 +40,16 @@ void make_board(BOARD board) {
 }
 
 int get_index(const int x, const int y) {
-    return y * WIDTH + x;
+    return (y * WIDTH) + x;
+}
+
+
+int get_x(const int index) {
+    return index % WIDTH;
+}
+
+int get_y(const int index) {
+    return index / WIDTH;
 }
 
 void set_field(BOARD board, const int x, const int y, const FIELD value) {
@@ -55,20 +64,32 @@ int get_next_y(const int y) {
     return (y+1) % HEIGHT;
 }
 
+int get_next_index(const int index, const Vec2 direction) {
+    int x = get_x(index);
+    int y = get_y(index);
+    
+    Vec2 d = direction;
+    
+    x = x + d.x;
+    y = y + d.y;
+    
+    return get_index(x, y);
+}
+
 FIELD get_field(const BOARD board, const int x, const int y) {
     return board[get_index(x, y)];
 }
 
 void set_plate(BOARD board, const int middle) {
-    set_field(board, middle-1, HEIGHT-1, PLATE);
-    set_field(board, middle+0, HEIGHT-1, PLATE);
-    set_field(board, middle+1, HEIGHT-1, PLATE);
+    set_field(board, middle-1, 0, PLATE);
+    set_field(board, middle+0, 0, PLATE);
+    set_field(board, middle+1, 0, PLATE);
 }
 
 int get_plate(const BOARD board) {
     int x = 0;
     
-    while (get_field(board, x, HEIGHT-1) != PLATE) {
+    while (get_field(board, x, 0) != PLATE) {
         ++x;
     }
     return ++x;
@@ -78,7 +99,7 @@ void move_plate_left(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle > 1) {
         set_plate(board, middle-1);
-        set_field(board, middle+1, HEIGHT-1, EMPTY);
+        set_field(board, middle+1, 0, EMPTY);
     }
 }
 
@@ -86,7 +107,7 @@ void move_plate_right(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle < WIDTH-2) {
         set_plate(board, middle+1);
-        set_field(board, middle-1, HEIGHT-1, EMPTY);
+        set_field(board, middle-1, 0, EMPTY);
     }
 }
 
@@ -106,9 +127,9 @@ void decrease_game_speed() {
 // TODO: remove since this is only debug
 int x = 0;
 void advanceRunningLight(BOARD board) {
-    board[get_index(x, 2)] = EMPTY;
+    board[get_index(x, 7)] = EMPTY;
     x = get_next_x(x);
-    board[get_index(x, 2)] = TEST;
+    board[get_index(x, 7)] = TEST;
 }
 
 int game_state_needs_update() {
@@ -126,26 +147,28 @@ void update_game_state() {
 }
 
 void draw(const BOARD board) {
-    // clear screen
-    display_fill_all(COLOR_BLACK);
     
-    // draw plate
-    FIELD plate_middle = get_plate(board);
-    display_plot_led(BOTTOM_LEFT + plate_middle-1, COLOR_PLATE);
-    display_plot_led(BOTTOM_LEFT + plate_middle+0, COLOR_PLATE);
-    display_plot_led(BOTTOM_LEFT + plate_middle+1, COLOR_PLATE);
-    
-    // draw running light
-  
-    int x = 0;
-    for (x = 0; x < WIDTH ; x++){
+    int i = 0;
+    // DRAW SCANLINE
+    for (i = 0; i < BOARD_SIZE ; i++){
         
-        switch (board[get_index(x, 2)]) {
-        case TEST:
-            display_plot_led(61+x, COLOR_BLUE);
-            break;
-        default:
-            break;
+        switch (board[i]) {
+            case EMPTY:
+                display_plot_led(i, COLOR_BLACK);
+                break;
+            case BALL:
+                display_plot_led(i, COLOR_BALL);
+                break;
+            case PLATE:
+                display_plot_led(i, COLOR_PLATE);
+                break;
+            case TEST:
+                display_plot_led(i, COLOR_BLUE);
+                break;
+            default:
+                break;
+                
         }
+        
     }
 }
