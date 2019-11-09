@@ -10,12 +10,11 @@
 #include "breakout.h"
 
 void debug_board(const BOARD board) {
-    int x, y, i;
+    int x, y;
     
     for (y = 0; y < HEIGHT ; y++){
         for (x = 0; x < WIDTH ; x++) {
-            i = y * WIDTH + x;
-            PRINTF("%d ", board[i]);
+            PRINTF("%d ", board[get_index(x, HEIGHT-1-y)]);
         }
         PRINTF("\n");
     }
@@ -62,6 +61,13 @@ int get_next_x(const int x) {
 
 int get_next_y(const int y) {
     return (y+1) % HEIGHT;
+}
+
+int is_index_out_of_bounds(const int index) {
+    if (index >= BOARD_SIZE || index <= 0 ) {
+        return 1;
+    }
+    return 0;
 }
 
 int get_next_index(const int index, const Vec2 direction) {
@@ -126,10 +132,17 @@ void decrease_game_speed() {
 
 // TODO: remove since this is only debug
 int x = 0;
+int idx = 90;
+Vec2 dir = { 1, -1};
 void advanceRunningLight(BOARD board) {
-    board[get_index(x, 7)] = EMPTY;
-    x = get_next_x(x);
-    board[get_index(x, 7)] = TEST;
+    board[idx] = EMPTY;
+    idx = get_next_index(idx, dir);
+    if (is_index_out_of_bounds(idx) == 1) {
+        idx = 90;
+    }
+    
+    board[idx] = TEST;
+    
 }
 
 int game_state_needs_update() {

@@ -64,6 +64,7 @@ void debug_board(const BOARD board);
 
 void make_board(BOARD board);
 
+int is_index_out_of_bounds(const int index);
 int get_index(const int x, const int y);
 int get_next_x(const int x);
 int get_next_y(const int y);
