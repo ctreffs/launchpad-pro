@@ -182,13 +182,14 @@ void app_init(const u16 *adc_raw)
     debug_board(board);
 
     
-    
+#if DEBUG
    int i = 0;
    for (i = 0; i < 15 ; i++){
    
-       advanceRunningLight(board);
+       simulateBall(board);
        debug_board(board);
    }
+#endif
     
     fader_section_init();  
     performance_section_init();

@@ -25,8 +25,9 @@
 #define COLOR_GREEN 0x00ff00
 #define COLOR_BLUE  0x0000ff
 
-#define COLOR_PLATE 0x00ff00
-#define COLOR_BALL  0xff0000
+#define COLOR_PLATE   0x00ff00
+#define COLOR_BALL    0x0000ff
+#define COLOR_CONTROL 0xff0000
 
 // KEYBINDINGS
 #define MOVE_RIGHT 19 // index 19 app_button_event
@@ -42,10 +43,11 @@
 #define HEIGHT 10
 
 #define EMPTY 0
-#define BALL 1
-#define PLATE 2
+#define WALL 1
+#define CONTROL 2
+#define PLATE 3
+#define BALL 4
 
-#define TEST 255
 
 typedef unsigned char FIELD;
 typedef unsigned char BOARD[];
@@ -84,7 +86,7 @@ int get_plate(const BOARD board);
 void move_plate_left(BOARD board);
 void move_plate_right(BOARD board);
 
-void advanceRunningLight(BOARD board);
+void simulateBall(BOARD board);
 void increase_game_speed();
 void decrease_game_speed();
 

@@ -26,7 +26,7 @@ void debug_board(const BOARD board) {
 
 void make_board(BOARD board) {
     frame_count = 0;
-    game_speed = 300;
+    game_speed = 240;
     
     int i;
     
@@ -36,7 +36,17 @@ void make_board(BOARD board) {
     }
     
     // set plate
-    set_plate(board, 4);
+    set_plate(board, 5);
+    
+    // walls
+    set_field(board, 0, 0, WALL);
+    set_field(board, WIDTH-1, 0, WALL);
+    set_field(board, 0, HEIGHT-1, WALL);
+    set_field(board, WIDTH-1, HEIGHT-1, WALL);
+    
+    // controls
+    set_field(board, 0, 1, CONTROL);
+    set_field(board, WIDTH-1, 1, CONTROL);
     
 }
 
@@ -139,7 +149,7 @@ int get_plate(const BOARD board) {
 
 void move_plate_left(BOARD board) {
     FIELD middle = get_plate(board);
-    if (middle > 1) {
+    if (middle > 2) {
         set_plate(board, middle-1);
         set_field(board, middle+1, 0, EMPTY);
     }
@@ -147,7 +157,7 @@ void move_plate_left(BOARD board) {
 
 void move_plate_right(BOARD board) {
     FIELD middle = get_plate(board);
-    if (middle < WIDTH-2) {
+    if (middle < WIDTH-3) {
         set_plate(board, middle+1);
         set_field(board, middle-1, 0, EMPTY);
     }
@@ -166,18 +176,16 @@ void decrease_game_speed() {
     game_speed = newSpeed;
 }
 
-// TODO: remove since this is only debug
-int x = 0;
-int idx = 50;
-Vec2 dir = { 1, -1};
+int idx = 15;
+Vec2 dir = { -1, 1};
 Vec2 pos = { 0, 0};
-void advanceRunningLight(BOARD board) {
+void simulateBall(BOARD board) {
     board[idx] = EMPTY;
     pos.x = get_x(idx);
     pos.y = get_y(idx);
     get_new_direction(board, &dir, pos);
     idx = get_next_index(idx, dir);
-    board[idx] = TEST;
+    board[idx] = BALL;
     
 }
 
@@ -192,7 +200,7 @@ int game_state_needs_update() {
 
 // update game state
 void update_game_state() {
-    advanceRunningLight(board);
+    simulateBall(board);
 }
 
 void draw(const BOARD board) {
@@ -211,8 +219,8 @@ void draw(const BOARD board) {
             case PLATE:
                 display_plot_led(i, COLOR_PLATE);
                 break;
-            case TEST:
-                display_plot_led(i, COLOR_BLUE);
+            case CONTROL:
+                display_plot_led(i, COLOR_CONTROL);
                 break;
             default:
                 break;
@@ -248,17 +256,13 @@ int is_neighbor(BOARD board, Vec2 pos) {
         // empty yes/no
         if (is_empty_field_vec(board, pos)) {
             // empty
-            //neighbors[index] = NULL;
             return 0;
         } else {
             // no empty
-            PRINTF("NOT_MPTY: x:%d y:%d\n", pos.x, pos.y);
-            //neighbors[index] = &pos;
             return 1;
         }
     } else {
-        PRINTF("OOBS: x:%d y:%d\n", pos.x, pos.y);
-        //neighbors[index] = &pos;
+        // out of bounds
         return 1;
     }
 }
@@ -268,11 +272,6 @@ int is_neighbor(BOARD board, Vec2 pos) {
 /// @param dir The direction of travel.
 /// @param n The neighbors.
 void bounce(Vec2* dir, int n[8]) {
-    
-    //PRINTF("curpos x:%d y:%d\n", current_position.x, current_position.y);
-    PRINTF("dir_pre x:%d y:%d\n", dir->x, dir->y);
-    
-    
     if (dir -> x == 1 && dir -> y == 1) {
         bounceQuadrant(dir, n[0], n[1], n[2], &(Vec2){1,1});
         
@@ -286,9 +285,6 @@ void bounce(Vec2* dir, int n[8]) {
         bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){1,-1});
         
     }
-    
-    PRINTF("dir_post x:%d y:%d\n", dir->x, dir->y);
-    
 }
 
 
