@@ -180,12 +180,15 @@ void app_init(const u16 *adc_raw)
     
     make_board(board);
     debug_board(board);
-   //int i = 0;
-   //for (i = 0; i < BOARD_SIZE ; i++){
-   //
-   //    advanceRunningLight(board);
-   //    debug_board(board);
-   //}
+
+    
+    
+   int i = 0;
+   for (i = 0; i < 15 ; i++){
+   
+       advanceRunningLight(board);
+       debug_board(board);
+   }
     
     fader_section_init();  
     performance_section_init();

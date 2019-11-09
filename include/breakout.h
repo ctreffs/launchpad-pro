@@ -66,8 +66,12 @@ void debug_board(const BOARD board);
 
 void make_board(BOARD board);
 
-int is_index_out_of_bounds(const int index);
+bool is_empty_field_vec(const BOARD board, const Vec2 vec);
+bool is_empty_field(const BOARD board, const int index);
+bool is_vec_on_board(const Vec2 vec);
+bool is_index_out_of_bounds(const int index);
 int get_index(const int x, const int y);
+int get_index_vec(const Vec2 vec);
 int get_next_x(const int x);
 int get_next_y(const int y);
 
@@ -89,5 +93,9 @@ void draw(const BOARD board);
 
 int game_state_needs_update();
 void update_game_state();
+
+
+void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position);
+
 
 #endif /* breakout_h */
