@@ -45,8 +45,13 @@
 #define EMPTY 0
 #define WALL 1
 #define CONTROL 2
+
+
 #define PLATE 3
 #define BALL 4
+
+#define BRICK_MIN 10
+#define BRICK_MAX 50
 
 
 typedef unsigned char FIELD;
@@ -67,6 +72,7 @@ long game_speed;
 void debug_board(const BOARD board);
 
 void make_board(BOARD board);
+void make_bricks(BOARD board, const unsigned int brickSize);
 
 bool is_empty_field_vec(const BOARD board, const Vec2 vec);
 bool is_empty_field(const BOARD board, const int index);
@@ -76,6 +82,7 @@ int get_index(const int x, const int y);
 int get_index_vec(const Vec2 vec);
 int get_next_x(const int x);
 int get_next_y(const int y);
+int get_next_index(const int index, const Vec2 direction);
 
 void set_field(BOARD board, const int x, const int y, const FIELD value);
 FIELD get_field(const BOARD board, const int x, const int y);
@@ -97,10 +104,10 @@ int game_state_needs_update();
 void update_game_state();
 
 
-void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position);
-void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
-void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
+Vec2 get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position);
+bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
+bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
 int is_neighbor(BOARD board, Vec2 pos);
-void bounce(Vec2* dir, int n[8]);
+Vec2 bounce(Vec2* dir, int n[8]);
 
 #endif /* breakout_h */
