@@ -96,6 +96,9 @@ void update_game_state();
 
 
 void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position);
-
+void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
+void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
+int is_neighbor(BOARD board, Vec2 pos);
+void bounce(Vec2* dir, int n[8]);
 
 #endif /* breakout_h */

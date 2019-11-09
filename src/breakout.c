@@ -168,7 +168,7 @@ void decrease_game_speed() {
 
 // TODO: remove since this is only debug
 int x = 0;
-int idx = 90;
+int idx = 50;
 Vec2 dir = { 1, -1};
 Vec2 pos = { 0, 0};
 void advanceRunningLight(BOARD board) {
@@ -177,9 +177,6 @@ void advanceRunningLight(BOARD board) {
     pos.y = get_y(idx);
     get_new_direction(board, &dir, pos);
     idx = get_next_index(idx, dir);
-    
-    PRINTF("dir x:%d y:%d\n", dir.x, dir.y);
-    
     board[idx] = TEST;
     
 }
@@ -225,6 +222,76 @@ void draw(const BOARD board) {
     }
 }
 // MARK: - collision
+
+void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position) {
+    int x = current_position.x;
+    int y = current_position.y;
+    
+    int neighbors[8];
+    
+     neighbors[0] = is_neighbor(board, (Vec2){ x,   y+1 });
+     neighbors[1] = is_neighbor(board, (Vec2){ x+1, y+1 });
+     neighbors[2] = is_neighbor(board, (Vec2){ x+1, y });
+     neighbors[3] = is_neighbor(board, (Vec2){ x+1, y-1 });
+     neighbors[4] = is_neighbor(board, (Vec2){ x,   y-1 });
+     neighbors[5] = is_neighbor(board, (Vec2){ x-1, y-1 });
+     neighbors[6] = is_neighbor(board, (Vec2){ x-1, y });
+     neighbors[7] = is_neighbor(board, (Vec2){ x-1, y+1 });
+    
+    bounce(direction, neighbors);
+}
+
+
+int is_neighbor(BOARD board, Vec2 pos) {
+    
+    if (is_vec_on_board(pos)) {
+        // empty yes/no
+        if (is_empty_field_vec(board, pos)) {
+            // empty
+            //neighbors[index] = NULL;
+            return 0;
+        } else {
+            // no empty
+            PRINTF("NOT_MPTY: x:%d y:%d\n", pos.x, pos.y);
+            //neighbors[index] = &pos;
+            return 1;
+        }
+    } else {
+        PRINTF("OOBS: x:%d y:%d\n", pos.x, pos.y);
+        //neighbors[index] = &pos;
+        return 1;
+    }
+}
+
+
+/// Callculate new direction.
+/// @param dir The direction of travel.
+/// @param n The neighbors.
+void bounce(Vec2* dir, int n[8]) {
+    
+    //PRINTF("curpos x:%d y:%d\n", current_position.x, current_position.y);
+    PRINTF("dir_pre x:%d y:%d\n", dir->x, dir->y);
+    
+    
+    if (dir -> x == 1 && dir -> y == 1) {
+        bounceQuadrant(dir, n[0], n[1], n[2], &(Vec2){1,1});
+        
+    } else if (dir -> x == 1 && dir -> y == -1) {
+        bounceQuadrant(dir, n[2], n[3], n[4], &(Vec2){-1,-1});
+        
+    } else if (dir -> x == -1 && dir -> y == -1) {
+        bounceQuadrant(dir, n[4], n[5], n[6], &(Vec2){1,-1});
+        
+    } else if (dir -> x == -1 && dir -> y == 1) {
+        bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){-1,1});
+        
+    }
+    
+    PRINTF("dir_post x:%d y:%d\n", dir->x, dir->y);
+    
+}
+
+
 bool isDiagonal (Vec2* v) {
     if (v -> x * v -> x + v -> y * v -> y == 2) return true;
     return false;
@@ -240,83 +307,28 @@ void straightBounce (Vec2* v) {
 /* d: diagonal upper right */
 /* r: right */
 /* q: quadrant rotation indicator */
-void diagonalBounce(Vec2* o, Vec2* u, Vec2* d, Vec2* r, Vec2* q) {
-    if (u == NULL && r == NULL)
+void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
+    if (u == 0 && r == 0 && d == 0) {
+        return;
+    } else if (u == 0 && r == 0) {
         straightBounce(o);
-    if (u != NULL && r != NULL && d != NULL)
+    } else if (u != 0 && r != 0 && d != 0) {
         straightBounce(o);
-    if (u != NULL) {
+    } else if (u != 0) {
         o -> x = 1 * q -> x;
         o -> y = -1 * q -> y;
-    }
-    if (r != NULL) {
+    } else if (r != 0) {
         o -> x = -1 * q -> x;
         o -> y = 1 * q -> y;
     }
 }
 
-void bounceQuadrant(Vec2* o, Vec2* u, Vec2* d, Vec2* r, Vec2* q) {
-    if (!isDiagonal(o))
-        straightBounce(o);
-    if (isDiagonal(o))
+void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q) {
+    if (isDiagonal(o)) {
         diagonalBounce(o, u, d, r, q);
-}
-
-
-/// Callculate new direction.
-/// @param dir The direction of travel.
-/// @param n The neighbors.
-void bounce(Vec2* dir, Vec2 n[]) {
-    
-    Vec2 vec_alpha = { 1, 1 };
-    Vec2 vec_beta = { -1, 1 };
-    Vec2 vec_gamma = { -1, -1 };
-    Vec2 vec_delta = { 1, -1 };
-    
-    if (dir -> x == vec_alpha.x && dir -> y == vec_alpha.x)
-        bounceQuadrant(dir, (n + 0), (n + 1), (n + 2), &vec_alpha);
-    if (dir -> x == vec_beta.x && dir -> y == vec_beta.x)
-        bounceQuadrant(dir, (n + 2), (n + 3), (n + 4), &vec_beta);
-    if (dir -> x == vec_gamma.x && dir -> y == vec_gamma.x)
-        bounceQuadrant(dir, (n + 4), (n + 5), (n + 6), &vec_gamma);
-    if (dir -> x == vec_delta.x && dir -> y == vec_delta.x)
-        bounceQuadrant(dir, (n + 6), (n + 7), (n + 0), &vec_delta);
-}
-
-void get_neighbor(BOARD board, Vec2* neighbors[], const int index, Vec2 pos) {
-    
-    if (is_vec_on_board(pos)) {
-        // empty yes/no
-        if (is_empty_field_vec(board, pos)) {
-            // empty
-            neighbors[index] = NULL;
-        } else {
-            // no empty
-            PRINTF("NOT_MPTY: index: %d x:%d y:%d\n", index, pos.x, pos.y);
-            neighbors[index] = &pos;
-        }
     } else {
-        PRINTF("OOBS: index: %d x:%d y:%d\n", index, pos.x, pos.y);
-        neighbors[index] = &pos;
+        straightBounce(o);
     }
 }
 
-
-void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position) {
-    int x = current_position.x;
-    int y = current_position.y;
-    
-    Vec2* neighbors[8];
-    PRINTF("curpos x:%d y:%d\n", current_position.x, current_position.y);
-    get_neighbor(board, neighbors, 0, (Vec2){ x,   y+1 });
-    get_neighbor(board, neighbors, 1, (Vec2){ x+1, y+1 });
-    get_neighbor(board, neighbors, 2, (Vec2){ x+1, y });
-    get_neighbor(board, neighbors, 3, (Vec2){ x+1, y-1 });
-    get_neighbor(board, neighbors, 4, (Vec2){ x,   y-1 });
-    get_neighbor(board, neighbors, 5, (Vec2){ x-1, y-1 });
-    get_neighbor(board, neighbors, 6, (Vec2){ x-1, y });
-    get_neighbor(board, neighbors, 7, (Vec2){ x-1, y+1 });
-    
-    bounce(direction, *neighbors);
-}
 
