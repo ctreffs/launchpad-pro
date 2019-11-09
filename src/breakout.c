@@ -277,13 +277,13 @@ void bounce(Vec2* dir, int n[8]) {
         bounceQuadrant(dir, n[0], n[1], n[2], &(Vec2){1,1});
         
     } else if (dir -> x == 1 && dir -> y == -1) {
-        bounceQuadrant(dir, n[2], n[3], n[4], &(Vec2){-1,-1});
+        bounceQuadrant(dir, n[2], n[3], n[4], &(Vec2){-1,1});
         
     } else if (dir -> x == -1 && dir -> y == -1) {
-        bounceQuadrant(dir, n[4], n[5], n[6], &(Vec2){1,-1});
+        bounceQuadrant(dir, n[4], n[5], n[6], &(Vec2){-1,-1});
         
     } else if (dir -> x == -1 && dir -> y == 1) {
-        bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){-1,1});
+        bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){1,-1});
         
     }
     
