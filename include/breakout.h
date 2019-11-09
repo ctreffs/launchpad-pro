@@ -53,7 +53,7 @@
 #define DEADPOOL 6
 
 #define BRICK_MIN 10
-#define BRICK_MAX 50
+#define BRICK_MAX 90
 #define COLLIDER 99
 
 

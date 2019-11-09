@@ -13,7 +13,8 @@
 
 void debug_board(const BOARD board) {
     int x, y;
-    
+    PRINTF("\n");
+    PRINTF("--------------------------\n");
     for (y = 0; y < HEIGHT ; y++){
         for (x = 0; x < WIDTH ; x++) {
             PRINTF("%d ", board[get_index(x, HEIGHT-1-y)]);
@@ -52,7 +53,7 @@ void make_board(BOARD board) {
     set_field(board, WIDTH-1, 1, CONTROL);
     
     
-    make_bricks(board, 4);
+    make_bricks(board, 1);
 }
 
 void make_bricks(BOARD board, const unsigned int brickSize) {
@@ -212,16 +213,19 @@ void simulateBall(BOARD board) {
     pos.y = get_y(idx);
     Vec2 cols[3];
     get_new_direction(board, &dir, pos, cols);
-
+    
     for (int i = 0; i < 3; i++) {
         cols[i].x = pos.x + cols[i].x;
         cols[i].y = pos.y + cols[i].y;
-
+        
+        
+        
         // reset collision highlight
         hasCollided = false;
-
+        
         if (cols[i].x != pos.x || cols[i].y != pos.y) {
             if (is_vec_on_board(cols[i])) { // COLLISION!
+                PRINTF("COL x:%d y:%d\n", cols[i].x, cols[i].y);
                 resolveCollison(board, cols[i]);
                 hasCollided = true;
             }
@@ -237,7 +241,7 @@ bool looseGame = false;
 bool winGame = false;
 int bricksResolvedCount = 0;
 void resolveCollison(BOARD board, const Vec2 col) {
-    PRINTF("COL x:%d y:%d\n", col.x, col.y);
+    
     int idx = get_index_vec(col);
     if (board[idx] == PLATE || board[idx] == CONTROL) {
         return;
@@ -253,6 +257,7 @@ void resolveCollison(BOARD board, const Vec2 col) {
             idx = get_next_index(idx, (Vec2){ 1,0 });
         }
         bricksResolvedCount += 1;
+        PRINTF("COL RESOLVED x:%d y:%d\n",col.x, col.y);
     } else if (board[idx] == DEADPOOL) {
         looseGame = true;
     }
@@ -274,7 +279,7 @@ int game_state_needs_update() {
 bool has_won(const BOARD board) {
     int i;
     for (i = 0; i < BOARD_SIZE; i++) {
-        if (board[i] >= BRICK_MIN && board[i] < BRICK_MAX) {
+        if (is_brick(board, i)) {
             return false;
         }
     }
@@ -305,17 +310,17 @@ void draw_score(const BOARD board) {
 }
 
 void draw(const BOARD board) {
-   
+    
     if (winGame) {
         display_fill_all(COLOR_GREEN);
         draw_score(board);
         return;
     }
     if (looseGame) {
-           display_fill_all(COLOR_RED);
-           draw_score(board);
-           return;
-       }
+        display_fill_all(COLOR_RED);
+        draw_score(board);
+        return;
+    }
     int i = 0;
     // DRAW SCANLINE
     for (i = 0; i < BOARD_SIZE ; i++){
@@ -349,6 +354,8 @@ void draw(const BOARD board) {
             }
         }
     }
+    
+    
 }
 
 // MARK: - collision
@@ -396,29 +403,38 @@ int is_neighbor(BOARD board, Vec2 pos) {
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
     if (dir -> x == 1 && dir -> y == 1) {
         if (bounceQuadrant(dir, n[0], n[1], n[2], &(Vec2){1,1})) {
-            cols[0] = (Vec2){ 1,1 };
+            cols[0] = (Vec2){0,1};
+            cols[1] = (Vec2){1,1};
+            cols[2] = (Vec2){1,0};
+            PRINTF("ALPHA\n");
         }
     } else if (dir -> x == 1 && dir -> y == -1) {
         if (bounceQuadrant(dir, n[2], n[3], n[4], &(Vec2){-1,1})) {
-            cols[0] = (Vec2){0,1};
+            cols[0] = (Vec2){1,0};
             cols[1] = (Vec2){1,-1};
-            cols[2] = (Vec2){1,0};
+            cols[2] = (Vec2){0,-1};
+            PRINTF("BETA\n");
         }
         
     } else if (dir -> x == -1 && dir -> y == -1) {
         if (bounceQuadrant(dir, n[4], n[5], n[6], &(Vec2){-1,-1})) {
-            cols[0] = (Vec2){0,1};
-            cols[1] = (Vec2){1,-1};
+            cols[0] = (Vec2){-1,0};
+            cols[1] = (Vec2){-1,-1};
+            cols[2] = (Vec2){0,-1};
+            PRINTF("GAMMA\n");
         }
         
     } else if (dir -> x == -1 && dir -> y == 1) {
         if (bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){1,-1})) {
-            cols[0] = (Vec2){1,-1};
-            cols[1] = (Vec2){1,0};
+            cols[0] = (Vec2){-1,0};
+            cols[1] = (Vec2){-1,1};
+            cols[2] = (Vec2){0,1};
+            PRINTF("DELTA\n");
         }
     }
     
     // that's us.
+    PRINTF("SELF\n");
     return;
 }
 
