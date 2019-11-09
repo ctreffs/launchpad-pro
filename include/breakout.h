@@ -112,4 +112,6 @@ int is_neighbor(BOARD board, Vec2 pos);
 Vec2 bounce(Vec2* dir, int n[8]);
 void resolveCollison(BOARD board, const Vec2 col);
 
+void add_collider(BOARD board, const int index);
+
 #endif /* breakout_h */

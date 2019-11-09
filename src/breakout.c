@@ -231,6 +231,7 @@ void simulateBall(BOARD board) {
     
 }
 bool looseGame = false;
+int bricksResolvedCount = 0;
 void resolveCollison(BOARD board, const Vec2 col) {
     PRINTF("COL x:%d y:%d\n", col.x, col.y);
     int idx = get_index_vec(col);
@@ -247,6 +248,7 @@ void resolveCollison(BOARD board, const Vec2 col) {
             }
             idx = get_next_index(idx, (Vec2){ 1,0 });
         }
+        bricksResolvedCount += 1;
     } else if (board[idx] == DEADPOOL) {
         looseGame = true;
     }
@@ -272,6 +274,18 @@ void update_game_state() {
 void draw(const BOARD board) {
     if (looseGame) {
         display_fill_all(COLOR_RED);
+        int i;
+        int y = 1;
+        int idx = get_index(1, y);
+        for (i = 0; i < bricksResolvedCount; i++) {
+            if (get_y(idx) == HEIGHT-1) {
+                y += 1;
+                idx = get_index(1, y);
+            }
+            display_plot_led(idx, COLOR_BLUE);
+            idx = get_next_index(idx, (Vec2){ 0, 1 });
+        }
+        
         return;
     }
     int i = 0;
@@ -423,3 +437,6 @@ bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q) {
 }
 
 
+void add_collider(BOARD board, const int index) {
+    board[index] = BRICK_MAX-1;
+}

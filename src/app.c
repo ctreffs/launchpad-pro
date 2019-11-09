@@ -96,6 +96,12 @@ void app_pad_event(u8 index, u8 value) {
     //    case FADER_SECTION: fader_section_handler(index); break;
     //    case PERFORMANCE_SECTION: performance_section_handler(index, value); break;
     //
+    if (value <= 0) {
+        // ignore off
+        return;
+    }
+    
+    add_collider(board, index);
 }
 
 // Button !pads
@@ -121,6 +127,7 @@ void app_button_event(u8 index, u8 value) {
             decrease_game_speed();
             break;
         default:
+            add_collider(board, index);
             break;
     }
     
