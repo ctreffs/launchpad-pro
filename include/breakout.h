@@ -50,6 +50,7 @@
 #define COLLISION 3
 #define PLATE 4
 #define BALL 5
+#define DEADPOOL 6
 
 #define BRICK_MIN 10
 #define BRICK_MAX 50
@@ -63,7 +64,6 @@ typedef struct Vec2
     int x;
     int y;
 } Vec2;
-
 
 #define BOARD_SIZE 100 // WIDTH * HEIGHT
 unsigned char board[BOARD_SIZE]; // DEFINE BOARD ARRAY

@@ -36,6 +36,9 @@ void make_board(BOARD board) {
     }
     
     // set plate
+    for (i = 1; i < WIDTH-2; i++) {
+        set_field(board, i, 0, DEADPOOL);
+    }
     set_plate(board, 5);
     
     // walls
@@ -174,7 +177,7 @@ void move_plate_left(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle > 2) {
         set_plate(board, middle-1);
-        set_field(board, middle+1, 0, EMPTY);
+        set_field(board, middle+1, 0, DEADPOOL);
     }
 }
 
@@ -182,7 +185,7 @@ void move_plate_right(BOARD board) {
     FIELD middle = get_plate(board);
     if (middle < WIDTH-3) {
         set_plate(board, middle+1);
-        set_field(board, middle-1, 0, EMPTY);
+        set_field(board, middle-1, 0, DEADPOOL);
     }
 }
 
@@ -227,7 +230,7 @@ void simulateBall(BOARD board) {
     board[idx] = BALL;
     
 }
-
+bool looseGame = false;
 void resolveCollison(BOARD board, const Vec2 col) {
     PRINTF("COL x:%d y:%d\n", col.x, col.y);
     int idx = get_index_vec(col);
@@ -244,10 +247,15 @@ void resolveCollison(BOARD board, const Vec2 col) {
             }
             idx = get_next_index(idx, (Vec2){ 1,0 });
         }
+    } else if (board[idx] == DEADPOOL) {
+        looseGame = true;
     }
 }
 
 int game_state_needs_update() {
+    if (looseGame) {
+        return 0;
+    }
     if (frame_count == game_speed) {
         frame_count = 0;
         return 1;
@@ -262,11 +270,14 @@ void update_game_state() {
 }
 
 void draw(const BOARD board) {
-    
+    if (looseGame) {
+        display_fill_all(COLOR_RED);
+        return;
+    }
     int i = 0;
     // DRAW SCANLINE
     for (i = 0; i < BOARD_SIZE ; i++){
-        if (board[i] == EMPTY) {
+        if (board[i] == EMPTY || board[i] == DEADPOOL) {
             display_plot_led(i, COLOR_BLACK);
         } else if (board[i] == BALL) {
             if (hasCollided) {
