@@ -231,6 +231,7 @@ void simulateBall(BOARD board) {
     
 }
 bool looseGame = false;
+bool winGame = false;
 int bricksResolvedCount = 0;
 void resolveCollison(BOARD board, const Vec2 col) {
     PRINTF("COL x:%d y:%d\n", col.x, col.y);
@@ -255,7 +256,7 @@ void resolveCollison(BOARD board, const Vec2 col) {
 }
 
 int game_state_needs_update() {
-    if (looseGame) {
+    if (looseGame || winGame) {
         return 0;
     }
     if (frame_count == game_speed) {
@@ -266,28 +267,52 @@ int game_state_needs_update() {
     return 0;
 }
 
+
+bool has_won(const BOARD board) {
+    int i;
+    for (i = 0; i < BOARD_SIZE; i++) {
+        if (board[i] >= BRICK_MIN && board[i] < BRICK_MAX) {
+            return false;
+        }
+    }
+    
+    return true;
+}
+
 // update game state
 void update_game_state() {
     simulateBall(board);
+    winGame = has_won(board);
+}
+
+
+void draw_score(const BOARD board) {
+    int i;
+    int y = 1;
+    int idx = get_index(1, y);
+    for (i = 0; i < bricksResolvedCount; i++) {
+        if (get_y(idx) == HEIGHT-1) {
+            y += 1;
+            idx = get_index(1, y);
+        }
+        display_plot_led(idx, COLOR_BLUE);
+        idx = get_next_index(idx, (Vec2){ 0, 1 });
+    }
+    
 }
 
 void draw(const BOARD board) {
-    if (looseGame) {
-        display_fill_all(COLOR_RED);
-        int i;
-        int y = 1;
-        int idx = get_index(1, y);
-        for (i = 0; i < bricksResolvedCount; i++) {
-            if (get_y(idx) == HEIGHT-1) {
-                y += 1;
-                idx = get_index(1, y);
-            }
-            display_plot_led(idx, COLOR_BLUE);
-            idx = get_next_index(idx, (Vec2){ 0, 1 });
-        }
-        
+   
+    if (winGame) {
+        display_fill_all(COLOR_GREEN);
+        draw_score(board);
         return;
     }
+    if (looseGame) {
+           display_fill_all(COLOR_RED);
+           draw_score(board);
+           return;
+       }
     int i = 0;
     // DRAW SCANLINE
     for (i = 0; i < BOARD_SIZE ; i++){
