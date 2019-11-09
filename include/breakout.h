@@ -105,11 +105,11 @@ int game_state_needs_update();
 void update_game_state();
 
 
-Vec2 get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position);
+void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2 cols[3]);
 bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
 bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
 int is_neighbor(BOARD board, Vec2 pos);
-Vec2 bounce(Vec2* dir, int n[8]);
+void bounce(Vec2* dir, int n[8], Vec2 cols[3]);
 void resolveCollison(BOARD board, const Vec2 col);
 
 void add_collider(BOARD board, const int index);
