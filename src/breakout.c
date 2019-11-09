@@ -74,7 +74,7 @@ bool is_empty_field_vec(const BOARD board, const Vec2 vec) {
 }
 
 bool is_empty_field(const BOARD board, const int index) {
-    if (!is_index_out_of_bounds(index)) {
+    if (is_index_out_of_bounds(index)) {
         return false;
     }
     
@@ -177,10 +177,8 @@ void advanceRunningLight(BOARD board) {
     pos.y = get_y(idx);
     get_new_direction(board, &dir, pos);
     idx = get_next_index(idx, dir);
+    
     PRINTF("dir x:%d y:%d\n", dir.x, dir.y);
-    if (is_index_out_of_bounds(idx)) {
-        idx = 0;
-    }
     
     board[idx] = TEST;
     
@@ -290,9 +288,11 @@ void get_neighbor(BOARD board, Vec2* neighbors[], const int index, Vec2 pos) {
     if (is_vec_on_board(pos)) {
         // empty yes/no
         if (is_empty_field_vec(board, pos)) {
+            // empty
             neighbors[index] = NULL;
         } else {
-            PRINTF("MPTY: index: %d x:%d y:%d\n", index, pos.x, pos.y);
+            // no empty
+            PRINTF("NOT_MPTY: index: %d x:%d y:%d\n", index, pos.x, pos.y);
             neighbors[index] = &pos;
         }
     } else {
