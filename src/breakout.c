@@ -26,8 +26,9 @@ void debug_board(const BOARD board) {
 
 
 void make_board(BOARD board) {
-    frame_count = 0;
+    
     game_speed = 220;
+    frame_count = game_speed;
     
     int i;
     
@@ -458,8 +459,25 @@ bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
     if (u == 0 && r == 0 && d == 0) {
         return false;
     } else if (u == 0 && r == 0) {
-        straightBounce(o);
+        int rnd = (o->x + o->y) % 3;
+        switch (rnd) {
+            case 0:
+                straightBounce(o);
+                break;
+            case 1:
+                o -> x = 1 * q -> x;
+                o -> y = -1 * q -> y;
+                break;
+            case 2:
+                o -> x = -1 * q -> x;
+                o -> y = 1 * q -> y;
+                break;
+            default:
+                straightBounce(o);
+                break;
+        }
         return true;
+        
     } else if (u != 0 && r != 0 && d != 0) {
         straightBounce(o);
         return true;
