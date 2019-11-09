@@ -54,7 +54,7 @@ void make_board(BOARD board) {
     set_field(board, WIDTH-1, 1, CONTROL);
     
     
-    make_bricks(board, 1);
+    make_bricks(board, 2);
 }
 
 void make_bricks(BOARD board, const unsigned int brickSize) {
@@ -204,49 +204,77 @@ void decrease_game_speed() {
     game_speed = newSpeed;
 }
 
-int idx = 15;
+int ballIdx = 15;
 Vec2 dir = { -1, 1};
 Vec2 pos = { 0, 0};
 bool hasCollided = false;
+bool looseGame = false;
+Vec2 cols[3];
+
+bool winGame = false;
+int bricksResolvedCount = 0;
+
 void simulateBall(BOARD board) {
-    board[idx] = EMPTY;
-    pos.x = get_x(idx);
-    pos.y = get_y(idx);
-    Vec2 cols[3];
+    board[ballIdx] = EMPTY;
+    pos.x = get_x(ballIdx);
+    pos.y = get_y(ballIdx);
+    
     get_new_direction(board, &dir, pos, cols);
     
+    bool isSave = false;
+    bool isDead = false;
+    
+    // reset collision highlight
+    hasCollided = false;
+    
+    // evaluate collisions
     for (int i = 0; i < 3; i++) {
         cols[i].x = pos.x + cols[i].x;
         cols[i].y = pos.y + cols[i].y;
         
         
         
-        // reset collision highlight
-        hasCollided = false;
-        
         if (cols[i].x != pos.x || cols[i].y != pos.y) {
             if (is_vec_on_board(cols[i])) { // COLLISION!
-                PRINTF("COL x:%d y:%d\n", cols[i].x, cols[i].y);
-                resolveCollison(board, cols[i]);
-                hasCollided = true;
+                
+                int idx = get_index(cols[i].x, cols[i].y);
+                //int idx = get_index_vec(cols[i]);
+                
+                if (board[idx] == PLATE || board[idx] == CONTROL) {
+                    isSave = true;
+                }
+                
+                if (board[idx] == DEADPOOL) {
+                    isDead = true;
+                }
             }
         }
-    }
+    } // <- eva col;
+    
+    bool shouldResolveCollisions = !isSave && !isDead;
+    looseGame = !isSave && isDead;
+    
+    // resolve collisions
+    if (shouldResolveCollisions) {
+        for (int j = 0; j < 3; j++) {
+            //PRINTF("COL x:%d y:%d\n", cols[i].x, cols[i].y);
+            resolveCollison(board, cols[j].x, cols[j].y);
+            
+        }
+    } // <- resolve end;
     
     
-    idx = get_next_index(idx, dir);
-    board[idx] = BALL;
+    ballIdx = get_next_index(ballIdx, dir);
+    board[ballIdx] = BALL;
     
 }
-bool looseGame = false;
-bool winGame = false;
-int bricksResolvedCount = 0;
-void resolveCollison(BOARD board, const Vec2 col) {
+
+
+void resolveCollison(BOARD board, const int x, const int y) {
     
-    int idx = get_index_vec(col);
-    if (board[idx] == PLATE || board[idx] == CONTROL) {
-        return;
-    } else if (is_brick(board, idx) || is_collider(board, idx)) {
+    int idx = get_index(x, y);
+    
+    if (is_brick(board, idx) || is_collider(board, idx)) {
         FIELD brickNum = board[idx];
         int y = get_y(idx);
         int idx = get_index(0, y);
@@ -257,10 +285,9 @@ void resolveCollison(BOARD board, const Vec2 col) {
             }
             idx = get_next_index(idx, (Vec2){ 1,0 });
         }
+        hasCollided = true;
         bricksResolvedCount += 1;
-        PRINTF("COL RESOLVED x:%d y:%d\n",col.x, col.y);
-    } else if (board[idx] == DEADPOOL) {
-        looseGame = true;
+        PRINTF("COL RESOLVED x:%d y:%d\n", x, y);
     }
 }
 

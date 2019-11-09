@@ -111,7 +111,8 @@ bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
 bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
 int is_neighbor(BOARD board, Vec2 pos);
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]);
-void resolveCollison(BOARD board, const Vec2 col);
+//void resolveCollison(BOARD board, const Vec2 col);
+void resolveCollison(BOARD board, const int x, const int y);
 
 void toggle_collider(BOARD board, const int index);
 bool is_brick(const BOARD board, const int index);
