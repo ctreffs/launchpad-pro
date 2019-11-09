@@ -101,7 +101,7 @@ void app_pad_event(u8 index, u8 value) {
         return;
     }
     
-    add_collider(board, index);
+    toggle_collider(board, index);
 }
 
 // Button !pads
@@ -127,7 +127,7 @@ void app_button_event(u8 index, u8 value) {
             decrease_game_speed();
             break;
         default:
-            add_collider(board, index);
+            toggle_collider(board, index);
             break;
     }
     

@@ -238,7 +238,7 @@ void resolveCollison(BOARD board, const Vec2 col) {
     int idx = get_index_vec(col);
     if (board[idx] == PLATE || board[idx] == CONTROL) {
         return;
-    } else if (board[idx] >= BRICK_MIN && board[idx] < BRICK_MAX) {
+    } else if (is_brick(board, idx) || is_collider(board, idx)) {
         FIELD brickNum = board[idx];
         int y = get_y(idx);
         int idx = get_index(0, y);
@@ -330,7 +330,7 @@ void draw(const BOARD board) {
             display_plot_led(i, COLOR_CONTROL);
         } else if (board[i] == COLLISION) {
             display_plot_led(i, COLOR_COLLISION);
-        } else if (board[i] >= BRICK_MIN && board[i] < BRICK_MAX) {
+        } else if (is_brick(board, i) || is_collider(board, i)) {
             switch ((board[i] + get_y(i)) % 3) {
                 case 0:
                     display_plot_led(i, COLOR_RED);
@@ -462,6 +462,35 @@ bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q) {
 }
 
 
-void add_collider(BOARD board, const int index) {
-    board[index] = BRICK_MAX-1;
+void toggle_collider(BOARD board, const int index) {
+    if (is_brick(board, index) || is_plate(board, index) || is_ball(board, index) || is_wall(board, index)) {
+        // do not edit;
+        return;
+    }
+    
+    if (board[index] == COLLIDER) {
+        board[index] = EMPTY;
+    } else {
+        board[index] = COLLIDER;
+    }
+}
+
+bool is_brick(const BOARD board, const int index) {
+    return board[index] >= BRICK_MIN && board[index] < BRICK_MAX;
+}
+
+bool is_plate(const BOARD board, const int index) {
+    return board[index] == PLATE;
+}
+
+bool is_ball(const BOARD board, const int index) {
+    return board[index] == BALL;
+}
+
+bool is_wall(const BOARD board, const int index) {
+    return board[index] == WALL;
+}
+
+bool is_collider(const BOARD board, const int index) {
+    return board[index] == COLLIDER;
 }

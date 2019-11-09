@@ -54,6 +54,7 @@
 
 #define BRICK_MIN 10
 #define BRICK_MAX 50
+#define COLLIDER 99
 
 
 typedef unsigned char FIELD;
@@ -112,6 +113,11 @@ int is_neighbor(BOARD board, Vec2 pos);
 Vec2 bounce(Vec2* dir, int n[8]);
 void resolveCollison(BOARD board, const Vec2 col);
 
-void add_collider(BOARD board, const int index);
+void toggle_collider(BOARD board, const int index);
+bool is_brick(const BOARD board, const int index);
+bool is_plate(const BOARD board, const int index);
+bool is_ball(const BOARD board, const int index);
+bool is_wall(const BOARD board, const int index);
+bool is_collider(const BOARD board, const int index);
 
 #endif /* breakout_h */
