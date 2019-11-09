@@ -9,6 +9,8 @@
 #include "app.h"
 #include "breakout.h"
 
+
+
 void debug_board(const BOARD board) {
     int x, y;
     
@@ -184,4 +186,54 @@ void draw(const BOARD board) {
         }
         
     }
+}
+
+
+
+
+bool isDiagonal (Vec2* v) {
+    if (v -> x * v -> x + v -> y * v -> y == 2) return true;
+    return false;
+}
+
+void straightBounce (Vec2* v) {
+    v -> x *= -1;
+    v -> y *= -1;
+}
+
+
+
+/* o: origin */
+/* u: up */
+/* d: diagonal upper right */
+/* r: right */
+/* q: quadrant rotation indicator */
+void diagonalBounce (Vec2* o, Vec2* u, Vec2* d, Vec2* r, Vec2* q) {
+    if (u == NULL && r == NULL) straightBounce(o);
+    if (u != NULL && r != NULL && d != NULL) straightBounce(o);
+    if (u != NULL) {
+        o -> x = 1 * q -> x;
+        o -> y = -1 * q -> y;
+    }
+    if (r != NULL) {
+        o -> x = -1 * q -> x;
+        o -> y = 1 * q -> y;
+    }
+}
+
+void bounceQuadrant (Vec2* o, Vec2* u, Vec2* d, Vec2* r, Vec2* q) {
+    if (!isDiagonal(o)) straightBounce(o);
+    if (isDiagonal(o)) diagonalBounce(o, u, d, r, q);
+}
+
+void bounce (Vec2* o, Vec2* n[]) {
+    
+    Vec2 vec_alpha = { 1, 1 };
+    Vec2 vec_beta = { -1, 1 };
+    Vec2 vec_gamma = { -1, -1 };
+    Vec2 vec_delta = { 1, -1 };
+    if (o -> x == vec_alpha.x && o -> y == vec_alpha.x) bounceQuadrant(o, *(n + 0), *(n + 1), *(n + 2), &vec_alpha);
+    if (o -> x == vec_beta.x && o -> y == vec_beta.x) bounceQuadrant(o, *(n + 2), *(n + 3), *(n + 4), &vec_beta);
+    if (o -> x == vec_gamma.x && o -> y == vec_gamma.x) bounceQuadrant(o, *(n + 4), *(n + 5), *(n + 6), &vec_gamma);
+    if (o -> x == vec_delta.x && o -> y == vec_delta.x) bounceQuadrant(o, *(n + 6), *(n + 7), *(n + 0), &vec_delta);
 }

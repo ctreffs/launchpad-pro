@@ -9,6 +9,9 @@
 #ifndef breakout_h
 #define breakout_h
 
+#include <stdbool.h>
+#define NULL ((void*)0)
+
 #if DEBUG
 #define PRINTF(...) printf(__VA_ARGS__)
 #else
@@ -52,7 +55,6 @@ typedef struct Vec2
     int x;
     int y;
 } Vec2;
-
 
 
 #define BOARD_SIZE 100 // WIDTH * HEIGHT
