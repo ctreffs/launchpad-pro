@@ -210,18 +210,21 @@ void simulateBall(BOARD board) {
     board[idx] = EMPTY;
     pos.x = get_x(idx);
     pos.y = get_y(idx);
-    Vec2 col = get_new_direction(board, &dir, pos);
-    
-    col.x = pos.x + col.x;
-    col.y = pos.y + col.y;
-    
-    // reset collision highlight
-    hasCollided = false;
-    
-    if (col.x != pos.x || col.y != pos.y) {
-        if (is_vec_on_board(col)) { // COLLISION!
-            resolveCollison(board, col);
-            hasCollided = true;
+    Vec2 cols[3];
+    get_new_direction(board, &dir, pos, cols);
+
+    for (int i = 0; i < 3; i++) {
+        cols[i].x = pos.x + cols[i].x;
+        cols[i].y = pos.y + cols[i].y;
+
+        // reset collision highlight
+        hasCollided = false;
+
+        if (cols[i].x != pos.x || cols[i].y != pos.y) {
+            if (is_vec_on_board(cols[i])) { // COLLISION!
+                resolveCollison(board, cols[i]);
+                hasCollided = true;
+            }
         }
     }
     
@@ -350,7 +353,7 @@ void draw(const BOARD board) {
 
 // MARK: - collision
 
-Vec2 get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position) {
+void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2 cols[3]) {
     int x = current_position.x;
     int y = current_position.y;
     
@@ -365,7 +368,7 @@ Vec2 get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position) {
     neighbors[6] = is_neighbor(board, (Vec2){ x-1, y });
     neighbors[7] = is_neighbor(board, (Vec2){ x-1, y+1 });
     
-    return bounce(direction, neighbors);
+    bounce(direction, neighbors, cols);
 }
 
 
@@ -390,29 +393,33 @@ int is_neighbor(BOARD board, Vec2 pos) {
 /// Callculate new direction.
 /// @param dir The direction of travel.
 /// @param n The neighbors.
-Vec2 bounce(Vec2* dir, int n[8]) {
+void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
     if (dir -> x == 1 && dir -> y == 1) {
         if (bounceQuadrant(dir, n[0], n[1], n[2], &(Vec2){1,1})) {
-            return (Vec2) { 1,1 };
+            cols[0] = (Vec2){ 1,1 };
         }
     } else if (dir -> x == 1 && dir -> y == -1) {
         if (bounceQuadrant(dir, n[2], n[3], n[4], &(Vec2){-1,1})) {
-            return (Vec2) { 1, -1};
+            cols[0] = (Vec2){0,1};
+            cols[1] = (Vec2){1,-1};
+            cols[2] = (Vec2){1,0};
         }
         
     } else if (dir -> x == -1 && dir -> y == -1) {
         if (bounceQuadrant(dir, n[4], n[5], n[6], &(Vec2){-1,-1})) {
-            return (Vec2) { -1, -1};
+            cols[0] = (Vec2){0,1};
+            cols[1] = (Vec2){1,-1};
         }
         
     } else if (dir -> x == -1 && dir -> y == 1) {
         if (bounceQuadrant(dir, n[6], n[7], n[0], &(Vec2){1,-1})) {
-            return (Vec2){ -1, 1};
+            cols[0] = (Vec2){1,-1};
+            cols[1] = (Vec2){1,0};
         }
     }
     
     // that's us.
-    return (Vec2) { 0, 0};
+    return;
 }
 
 
