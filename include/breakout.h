@@ -105,10 +105,13 @@ void draw(const BOARD board);
 int game_state_needs_update();
 void update_game_state();
 
-
+typedef int ROTATION;
+enum collisionType {none, point, corner, up, side};
+void collide(enum collisionType type, ROTATION rot, Vec2 vecs[3]);
 void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2 cols[3]);
-bool bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
-bool diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
+void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
+void straightBounce (Vec2* v);
+void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
 int is_neighbor(BOARD board, Vec2 pos);
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]);
 //void resolveCollison(BOARD board, const Vec2 col);
