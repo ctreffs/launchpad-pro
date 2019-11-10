@@ -112,7 +112,7 @@ void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2
 void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q);
 void straightBounce (Vec2* v);
 void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q);
-int is_neighbor(BOARD board, Vec2 pos);
+int is_neighbour(BOARD board, Vec2 pos);
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]);
 //void resolveCollison(BOARD board, const Vec2 col);
 void resolveCollison(BOARD board, const int x, const int y);

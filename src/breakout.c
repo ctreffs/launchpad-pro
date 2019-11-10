@@ -432,25 +432,22 @@ void draw(const BOARD board) {
 // MARK: - collision
 
 void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2 cols[3]) {
-    int x = current_position.x;
-    int y = current_position.y;
+    int neighbours[8];
     
-    int neighbors[8];
+    neighbours[0] = is_neighbour(board, neighbourhood[1]);
+    neighbours[1] = is_neighbour(board, neighbourhood[2]);
+    neighbours[2] = is_neighbour(board, neighbourhood[3]);
+    neighbours[3] = is_neighbour(board, neighbourhood[4]);
+    neighbours[4] = is_neighbour(board, neighbourhood[5]);
+    neighbours[5] = is_neighbour(board, neighbourhood[6]);
+    neighbours[6] = is_neighbour(board, neighbourhood[7]);
+    neighbours[7] = is_neighbour(board, neighbourhood[8]);
     
-    neighbors[0] = is_neighbor(board, neighbourhood[1]);
-    neighbors[1] = is_neighbor(board, neighbourhood[2]);
-    neighbors[2] = is_neighbor(board, neighbourhood[3]);
-    neighbors[3] = is_neighbor(board, neighbourhood[4]);
-    neighbors[4] = is_neighbor(board, neighbourhood[5]);
-    neighbors[5] = is_neighbor(board, neighbourhood[6]);
-    neighbors[6] = is_neighbor(board, neighbourhood[7]);
-    neighbors[7] = is_neighbor(board, neighbourhood[8]);
-    
-    bounce(direction, neighbors, cols);
+    bounce(direction, neighbours, cols);
 }
 
 
-int is_neighbor(BOARD board, Vec2 pos) {
+int is_neighbour(BOARD board, Vec2 pos) {
     
     if (is_vec_on_board(pos)) {
         // empty yes/no
@@ -470,7 +467,7 @@ int is_neighbor(BOARD board, Vec2 pos) {
 
 /// Calculate new direction.
 /// @param dir The direction of travel.
-/// @param n The neighbors.
+/// @param n The neighbours.
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
     if (dir -> x == 1 && dir -> y == 1) {
         collide(corner, rotateAlphaPos, cols);
