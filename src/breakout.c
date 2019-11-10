@@ -210,6 +210,11 @@ Vec2 pos = { 0, 0};
 bool hasCollided = false;
 bool looseGame = false;
 Vec2 cols[3];
+// 3x3 neighbourhood grid.
+// Self in the center spot with index 0.
+// All other indices defined as visited
+// in clockwise spiral movement starting
+// at the center and going up, then right.
 const Vec2 neighbourhood[9] = {
     (Vec2){0,0},
     (Vec2){0,1},
@@ -432,14 +437,14 @@ void get_new_direction(BOARD board, Vec2 *direction, Vec2 current_position, Vec2
     
     int neighbors[8];
     
-    neighbors[0] = is_neighbor(board, (Vec2){ x,   y+1 });
-    neighbors[1] = is_neighbor(board, (Vec2){ x+1, y+1 });
-    neighbors[2] = is_neighbor(board, (Vec2){ x+1, y });
-    neighbors[3] = is_neighbor(board, (Vec2){ x+1, y-1 });
-    neighbors[4] = is_neighbor(board, (Vec2){ x,   y-1 });
-    neighbors[5] = is_neighbor(board, (Vec2){ x-1, y-1 });
-    neighbors[6] = is_neighbor(board, (Vec2){ x-1, y });
-    neighbors[7] = is_neighbor(board, (Vec2){ x-1, y+1 });
+    neighbors[0] = is_neighbor(board, neighbourhood[1]);
+    neighbors[1] = is_neighbor(board, neighbourhood[2]);
+    neighbors[2] = is_neighbor(board, neighbourhood[3]);
+    neighbors[3] = is_neighbor(board, neighbourhood[4]);
+    neighbors[4] = is_neighbor(board, neighbourhood[5]);
+    neighbors[5] = is_neighbor(board, neighbourhood[6]);
+    neighbors[6] = is_neighbor(board, neighbourhood[7]);
+    neighbors[7] = is_neighbor(board, neighbourhood[8]);
     
     bounce(direction, neighbors, cols);
 }
