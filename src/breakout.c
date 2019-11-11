@@ -479,28 +479,32 @@ void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
                        n[0 + rotateAlphaPos],
                        n[1 + rotateAlphaPos],
                        n[2 + rotateAlphaPos],
-                       &rotateAlphaVec);
+                       &rotateAlphaVec,
+                       cols);
         PRINTF("ALPHA\n");
     } else if (dir -> x == 1 && dir -> y == -1) {
         bounceQuadrant(dir,
                        n[0 + rotateBetaPos],
                        n[1 + rotateBetaPos],
                        n[2 + rotateBetaPos],
-                       &rotateBetaVec);
+                       &rotateBetaVec,
+                       cols);
         PRINTF("BETA\n");
     } else if (dir -> x == -1 && dir -> y == -1) {
         bounceQuadrant(dir,
                        n[0 + rotateGammaPos],
                        n[1 + rotateGammaPos],
                        n[2 + rotateGammaPos],
-                       &rotateGammaVec);
+                       &rotateGammaVec,
+                       cols);
         PRINTF("GAMMA\n");
     } else if (dir -> x == -1 && dir -> y == 1) {
         bounceQuadrant(dir,
                        n[0 + rotateDeltaPos],
                        n[1 + rotateDeltaPos],
                        n[2 + rotateDeltaPos],
-                       &rotateDeltaVec);
+                       &rotateDeltaVec,
+                       cols);
         PRINTF("DELTA\n");
     }
     
@@ -525,12 +529,12 @@ void straightBounce (Vec2* v) {
 /* d: diagonal upper right */
 /* r: right */
 /* q: quadrant rotation indicator */
-void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
+void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q, Vec2 vecs[3]) {
     if (u == 0 && r == 0 && d == 0) {
-        collide(none, rotateAlphaPos, cols);
+        collide(none, rotateAlphaPos, vecs);
         return;
     } else if (u == 0 && r == 0) {
-        collide(point, rotateAlphaPos, cols);
+        collide(point, rotateAlphaPos, vecs);
         int rnd = (o->x + o->y) % 3;
         switch (rnd) {
             case 0:
@@ -551,16 +555,16 @@ void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
         return;
         
     } else if (u != 0 && r != 0 && d != 0) {
-        collide(corner, rotateAlphaPos, cols);
+        collide(corner, rotateAlphaPos, vecs);
         straightBounce(o);
         return;
     } else if (u != 0) {
-        collide(up, rotateAlphaPos, cols);
+        collide(up, rotateAlphaPos, vecs);
         o -> x = 1 * q -> x;
         o -> y = -1 * q -> y;
         return;
     } else if (r != 0) {
-        collide(side, rotateAlphaPos, cols);
+        collide(side, rotateAlphaPos, vecs);
         o -> x = -1 * q -> x;
         o -> y = 1 * q -> y;
         return;
@@ -568,9 +572,9 @@ void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
     return;
 }
 
-void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q) {
+void bounceQuadrant(Vec2* o, int u, int d, int r, Vec2* q, Vec2 vecs[3]) {
     if (isDiagonal(o)) {
-        diagonalBounce(o, u, d, r, q);
+        diagonalBounce(o, u, d, r, q, vecs);
     } else {
         straightBounce(o);
     }
