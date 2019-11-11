@@ -236,6 +236,11 @@ Vec2 rotateGammaVec = (Vec2){-1,-1};
 Vec2 rotateDeltaVec = (Vec2){1,-1};
 
 void collide(enum collisionType type, ROTATION rot, Vec2 vecs[3]) {
+    // reset collision vectors
+    vecs[0] = neighbourhood[0];
+    vecs[1] = neighbourhood[0];
+    vecs[2] = neighbourhood[0];
+
     switch (type) {
         case none:
             vecs[0] = neighbourhood[0];
@@ -243,7 +248,7 @@ void collide(enum collisionType type, ROTATION rot, Vec2 vecs[3]) {
             vecs[2] = neighbourhood[2 * rot];
         case corner:
             vecs[1] = neighbourhood[2 * rot];
-            vecs[2] = neighbourhood[2 * rot];
+            //            vecs[2] = neighbourhood[2 * rot];
             vecs[3] = neighbourhood[2 * rot];
         case up:
             vecs[1] = neighbourhood[2 * rot];
@@ -470,7 +475,6 @@ int is_neighbour(BOARD board, Vec2 pos) {
 /// @param n The neighbours.
 void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
     if (dir -> x == 1 && dir -> y == 1) {
-        collide(corner, rotateAlphaPos, cols);
         bounceQuadrant(dir,
                        n[0 + rotateAlphaPos],
                        n[1 + rotateAlphaPos],
@@ -478,7 +482,6 @@ void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
                        &rotateAlphaVec);
         PRINTF("ALPHA\n");
     } else if (dir -> x == 1 && dir -> y == -1) {
-        collide(corner, rotateBetaPos, cols);
         bounceQuadrant(dir,
                        n[0 + rotateBetaPos],
                        n[1 + rotateBetaPos],
@@ -486,7 +489,6 @@ void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
                        &rotateBetaVec);
         PRINTF("BETA\n");
     } else if (dir -> x == -1 && dir -> y == -1) {
-        collide(corner, rotateGammaPos, cols);
         bounceQuadrant(dir,
                        n[0 + rotateGammaPos],
                        n[1 + rotateGammaPos],
@@ -494,7 +496,6 @@ void bounce(Vec2* dir, int n[8], Vec2 cols[3]) {
                        &rotateGammaVec);
         PRINTF("GAMMA\n");
     } else if (dir -> x == -1 && dir -> y == 1) {
-        collide(corner, rotateDeltaPos, cols);
         bounceQuadrant(dir,
                        n[0 + rotateDeltaPos],
                        n[1 + rotateDeltaPos],
@@ -526,8 +527,10 @@ void straightBounce (Vec2* v) {
 /* q: quadrant rotation indicator */
 void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
     if (u == 0 && r == 0 && d == 0) {
+        collide(none, rotateAlphaPos, cols);
         return;
     } else if (u == 0 && r == 0) {
+        collide(point, rotateAlphaPos, cols);
         int rnd = (o->x + o->y) % 3;
         switch (rnd) {
             case 0:
@@ -548,13 +551,16 @@ void diagonalBounce(Vec2* o, int u, int d, int r, Vec2* q) {
         return;
         
     } else if (u != 0 && r != 0 && d != 0) {
+        collide(corner, rotateAlphaPos, cols);
         straightBounce(o);
         return;
     } else if (u != 0) {
+        collide(up, rotateAlphaPos, cols);
         o -> x = 1 * q -> x;
         o -> y = -1 * q -> y;
         return;
     } else if (r != 0) {
+        collide(side, rotateAlphaPos, cols);
         o -> x = -1 * q -> x;
         o -> y = 1 * q -> y;
         return;
